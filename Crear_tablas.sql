@@ -7,7 +7,7 @@ drop table profesor;
 
 
 CREATE TABLE profesor(
-	name        VARCHAR(45) NOT NULL,
+	nombre        VARCHAR(45) NOT NULL,
 	apellido1   VARCHAR(40) NOT NULL,
 	apellido2   VARCHAR(40),
 	email       VARCHAR(70),
@@ -58,9 +58,20 @@ CREATE TABLE pregunta(
 	CONSTRAINT cartelfk FOREIGN KEY (idCartel) REFERENCES cartel(id)
 );
 
+
+
+CREATE TABLE reto(
+	id          INT(5),
+	descripcion      VARCHAR(600) NOT NULL,
+	idCartel    INT(20),
+	CONSTRAINT retoapk 	PRIMARY KEY(id,idCartel),
+	CONSTRAINT cartelfkreto FOREIGN KEY (idCartel) REFERENCES cartel(id)
+);
+
+
 CREATE TABLE respuesta(
 	idR         INT(7),
-	idC	        INT(20),
+	idC	    INT(20),
 	idP         INT(5),
 	cuerpo      VARCHAR(600) NOT NULL,
 	veces       INT(10),
@@ -70,9 +81,10 @@ CREATE TABLE respuesta(
 );
 
 
-INSERT INTO profesor(name,apellido1,apellido2,email,contrasena,emailprofe) VALUES('uno','dos','tres','uno@unizar.es','tablahash',null);
+INSERT INTO profesor(nombre,apellido1,apellido2,email,contrasena,emailprofe) VALUES('uno','dos','tres','uno@unizar.es','tablahash',null);
 INSERT INTO alumno(nombre,apellido1,apellido2,email,contrasena,emailprofe) VALUES('alum','ape','ape2','alum@unizar.es','hashtable','uno@unizar.es');
 INSERT INTO cartel(id,emailA,ganador,agno,tema,link) VALUES(567,'alum@unizar.es','F',2010,'Agua','link');
 INSERT INTO comentario(idC,idCartel,nombre,cuerpo,pendiente) VALUES(22,567,'coment','buenos dias andalucia','F');
 INSERT INTO pregunta(id,titulo,idCartel) VALUES(10,'pregunting',567);
 INSERT INTO respuesta(idR,idC,idP,cuerpo,veces,ganador) VALUES(100,567,10,'U mad?', 73, 'T');
+INSERT INTO reto(id,descripcion,idCartel) VALUES(69,'Te reto a que te mueras', 567);
