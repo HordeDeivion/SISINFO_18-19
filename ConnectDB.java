@@ -109,6 +109,22 @@ public class DBConnect {
         if (HaPodido==1){
             System.out.println("borrado correcto");
         }
+        HaPodido= pregunta_asociada_cartel(1);
+        if (HaPodido==1){
+            System.out.println("pregunta_asociada_cartel correcto");
+        }
+        HaPodido= carteles_asociados_tema("Agua");
+        if (HaPodido==1){
+            System.out.println("carteles_asociados_tema correcto");
+        }  
+        HaPodido=carteles_ganadores_anyo(2018);
+        if (HaPodido==1){
+            System.out.println("carteles_ganadores_anyo correcto");
+        } 
+        HaPodido=retos_asociados_cartel(1);
+        if (HaPodido==1){
+            System.out.println("retos_asociados_cartel correcto");
+        }
     }
     
     /*
@@ -861,6 +877,134 @@ public class DBConnect {
                 }
                 else{
                     System.out.println("No se cambia nada");
+                }
+              
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+             Puede = -1;
+             return Puede;
+
+        }
+        return Puede;
+    }
+    
+    //Preguntas asociadas a un cartel
+    public static int pregunta_asociada_cartel(int idCartel){
+         String url = "jdbc:mysql://localhost:3306/sisInfBD?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+         String username = "root";
+         String password = "hola";
+         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
+         try{
+                String comando="SELECT p.id, p.titulo\n" +
+                                "FROM cartel c left join pregunta p on c.id=p.idCartel\n" +
+                                "WHERE c.id="+idCartel+";";
+                Connection conection = DriverManager.getConnection(url, username, password);
+                
+                System.out.println("Buscando pregunta asociada al cartel: "+idCartel);
+                PreparedStatement al = conection.prepareStatement(comando);
+                // Ejecuta la instruccion en la BBDD
+                // Puede == 1 si y solo si ha podido insertar
+                ResultSet rs =al.executeQuery();
+                while (rs.next()){
+                    int idPregunta = rs.getInt("id");
+                    String tituloPreg = rs.getString("titulo");
+                    System.out.format("%s, %s\n", idPregunta, tituloPreg);
+                }
+              
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+             Puede = -1;
+             return Puede;
+
+        }
+        return Puede;
+    }   
+    
+    //Carteles asociados a un tema
+    public static int carteles_asociados_tema(String tema){
+         String url = "jdbc:mysql://localhost:3306/sisInfBD?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+         String username = "root";
+         String password = "hola";
+         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
+         try{
+                String comando="SELECT c.id, c.link\n" +
+                               "FROM cartel c\n" +
+                               "WHERE tema='" + tema + "';";
+                Connection conection = DriverManager.getConnection(url, username, password);
+                
+                System.out.println("Buscando carteles asociados al tema: "+tema);
+                PreparedStatement al = conection.prepareStatement(comando);
+                // Ejecuta la instruccion en la BBDD
+                // Puede == 1 si y solo si ha podido insertar
+                ResultSet rs =al.executeQuery();
+                while (rs.next()){
+                    int idCartel = rs.getInt("id");
+                    String link = rs.getString("link");
+                    System.out.format("%s, %s\n", idCartel, link);
+                }
+              
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+             Puede = -1;
+             return Puede;
+
+        }
+        return Puede;
+    } 
+    
+    //Carteles ganadores por año
+    public static int carteles_ganadores_anyo(int anyo){
+         String url = "jdbc:mysql://localhost:3306/sisInfBD?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+         String username = "root";
+         String password = "hola";
+         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
+         try{
+                String comando="SELECT c.id, c.link\n" +
+                                "FROM cartel c\n" +
+                                "WHERE c.agno=" + anyo + " AND c.ganador=1;";
+                Connection conection = DriverManager.getConnection(url, username, password);
+                
+                System.out.println("Buscando carteles ganadores del año: "+anyo);
+                PreparedStatement al = conection.prepareStatement(comando);
+                // Ejecuta la instruccion en la BBDD
+                // Puede == 1 si y solo si ha podido insertar
+                ResultSet rs =al.executeQuery();
+                while (rs.next()){
+                    int idCartel = rs.getInt("id");
+                    String link = rs.getString("link");
+                    System.out.format("%s, %s\n", idCartel, link);
+                }
+              
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+             Puede = -1;
+             return Puede;
+
+        }
+        return Puede;
+    }
+    
+    //Retos asociados a un cartel
+    public static int retos_asociados_cartel(int idCartel){
+         String url = "jdbc:mysql://localhost:3306/sisInfBD?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+         String username = "root";
+         String password = "hola";
+         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
+         try{
+                String comando="SELECT r.id, r.descripcion\n" +
+                                "FROM cartel c left join reto r on c.id=r.idCartel\n" +
+                                "WHERE c.id=" + idCartel + ";";
+                Connection conection = DriverManager.getConnection(url, username, password);
+                
+                System.out.println("Buscando retos asociados al cartel: "+idCartel);
+                PreparedStatement al = conection.prepareStatement(comando);
+                // Ejecuta la instruccion en la BBDD
+                // Puede == 1 si y solo si ha podido insertar
+                ResultSet rs =al.executeQuery();
+                while (rs.next()){
+                    int idReto = rs.getInt("id");
+                    String descripcion = rs.getString("descripcion");
+                    System.out.format("%s, %s\n", idReto, descripcion);
                 }
               
         } catch(SQLException ex){
