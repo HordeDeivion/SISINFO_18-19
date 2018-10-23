@@ -392,4 +392,22 @@ public class Funciones_usuario {
         }
     }
     
+        // Listado de respuestas a una pregunta
+    public static void listado_respuestas_func (int id_Pregunta){
+        System.out.println("Buscando respuestas asociadas a una pregunta: "+id_Pregunta);
+        DBConnect d = new DBConnect();  
+        try{
+            ResultSet rs= d.listado_respuestas(id_Pregunta);
+            while (rs.next()){
+                    int idCom = rs.getInt("id");
+                    String cuerpo = rs.getString("cuerpo");
+                    int veces = rs.getInt("veces");
+                    String ganador = rs.getString("ganador");
+                    System.out.format("%s, %s, %s, %s\n", idCom,cuerpo,veces,ganador);
+            }
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+        }
+    }
+    
 }
