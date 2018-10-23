@@ -872,44 +872,35 @@ public ConnectDB(){}
         return Puede;
     }
     
+    /*
+    --------------------------------------------    CONSULTAS           --------------------------------------------------
+    ----------------------------------------------------------------------------------------------------------------------
+    */
+    
     //Preguntas asociadas a un cartel
-    public static int pregunta_asociada_cartel(int idCartel){
-          
-         
-        
-         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
+    public ResultSet pregunta_asociada_cartel(int idCartel){
+     
+         ResultSet rs=null;
          try{
                 String comando="SELECT p.id, p.titulo\n" +
                                 "FROM cartel c left join pregunta p on c.id=p.idCartel\n" +
                                 "WHERE c.id="+idCartel+";";
                 Connection conection = DriverManager.getConnection(url, username, password);
-                
-                System.out.println("Buscando pregunta asociada al cartel: "+idCartel);
                 PreparedStatement al = conection.prepareStatement(comando);
-                // Ejecuta la instruccion en la BBDD
-                // Puede == 1 si y solo si ha podido insertar
-                ResultSet rs =al.executeQuery();
-                while (rs.next()){
-                    int idPregunta = rs.getInt("id");
-                    String tituloPreg = rs.getString("titulo");
-                    System.out.format("%s, %s\n", idPregunta, tituloPreg);
-                }
+                rs =al.executeQuery();
+                return rs;
               
         } catch(SQLException ex){
              System.out.println(ex.getMessage());
-             Puede = -1;
-             return Puede;
+             return rs;
 
         }
-        return Puede;
     }   
     
     //Carteles asociados a un tema
-    public static int carteles_asociados_tema(String tema){
-          
-         
-        
-         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
+    public ResultSet carteles_asociados_tema(String tema){
+  
+         ResultSet rs=null;
          try{
                 String comando="SELECT c.id, c.link\n" +
                                "FROM cartel c\n" +
@@ -917,30 +908,19 @@ public ConnectDB(){}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 
                 PreparedStatement al = conection.prepareStatement(comando);
-                // Ejecuta la instruccion en la BBDD
-                // Puede == 1 si y solo si ha podido insertar
-                ResultSet rs =al.executeQuery();
-                while (rs.next()){
-                    int idCartel = rs.getInt("id");
-                    String link = rs.getString("link");
-                    System.out.format("%s, %s\n", idCartel, link);
-                }
+                rs =al.executeQuery();
+                return rs;
               
         } catch(SQLException ex){
              System.out.println(ex.getMessage());
-             Puede = -1;
-             return Puede;
+             return rs;
 
         }
-        return Puede;
     } 
     
     //Carteles ganadores por año
-    public static int carteles_ganadores_anyo(int anyo){
-          
-         
-        
-         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
+    public ResultSet carteles_ganadores_anyo(int anyo){    
+         ResultSet rs=null;
          try{
                 String comando="SELECT c.id, c.link\n" +
                                 "FROM cartel c\n" +
@@ -948,54 +928,81 @@ public ConnectDB(){}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 
                 PreparedStatement al = conection.prepareStatement(comando);
-                // Ejecuta la instruccion en la BBDD
-                // Puede == 1 si y solo si ha podido insertar
-                ResultSet rs =al.executeQuery();
-                while (rs.next()){
-                    int idCartel = rs.getInt("id");
-                    String link = rs.getString("link");
-                    System.out.format("%s, %s\n", idCartel, link);
-                }
+                rs =al.executeQuery();
+                return rs;
               
         } catch(SQLException ex){
              System.out.println(ex.getMessage());
-             Puede = -1;
-             return Puede;
+             return rs;
 
         }
-        return Puede;
     }
     
     //Retos asociados a un cartel
-    public static int retos_asociados_cartel(int idCartel){
-          
-         
-        
-         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
+    public ResultSet retos_asociados_cartel(int idCartel){  
+         ResultSet rs=null;
          try{
                 String comando="SELECT r.id, r.descripcion\n" +
                                 "FROM cartel c left join reto r on c.id=r.idCartel\n" +
                                 "WHERE c.id=" + idCartel + ";";
                 Connection conection = DriverManager.getConnection(url, username, password);
-                
-                System.out.println("Buscando retos asociados al cartel: "+idCartel);
+       
                 PreparedStatement al = conection.prepareStatement(comando);
-                // Ejecuta la instruccion en la BBDD
-                // Puede == 1 si y solo si ha podido insertar
-                ResultSet rs =al.executeQuery();
+                rs =al.executeQuery();
                 while (rs.next()){
                     int idReto = rs.getInt("id");
                     String descripcion = rs.getString("descripcion");
                     System.out.format("%s, %s\n", idReto, descripcion);
                 }
+                return rs;
               
         } catch(SQLException ex){
              System.out.println(ex.getMessage());
-             Puede = -1;
-             return Puede;
+             return rs;
 
         }
-        return Puede;
+    }
+    
+    //Comentarios pendientes dirigidos a los alumnos de un profesor
+    public ResultSet comentarios_pendientes(String emailProf){    
+         ResultSet rs=null;
+         try{
+                String comando="SELECT com.idC, com.nombre, com.cuerpo\n" +
+"	FROM ((profesor prof left join alumno a on prof.email = a.emailprofe) left join cartel c on a.email=c.emailA) left join comentario com on c.id=com.idCartel\n" +
+"	WHERE prof.email='" + emailProf + "' AND com.pendiente='T';";
+                Connection conection = DriverManager.getConnection(url, username, password);
+                
+                System.out.println("Buscando comentarios pendientes del profesor: "+emailProf);
+                PreparedStatement al = conection.prepareStatement(comando);
+                rs =al.executeQuery();
+                return rs;
+              
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+             return rs;
+
+        }
+    }
+    
+    //Carteles asociados a un alumno
+    public ResultSet carteles_alum(String emailAlum){  
+         ResultSet rs=null;
+         try{
+                String comando="SELECT c.id, c.link\n" +
+                                "FROM alumno a left join cartel c on a.email=c.emailA\n" +
+                                "WHERE c.emailA='"+ emailAlum+ "';";
+                Connection conection = DriverManager.getConnection(url, username, password);
+                
+                System.out.println("Buscando carteles del alumno: "+emailAlum);
+                PreparedStatement al = conection.prepareStatement(comando);
+                rs =al.executeQuery();
+                return rs;
+              
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+             return rs;
+
+        }
     }
     
     /*
@@ -1003,7 +1010,6 @@ public ConnectDB(){}
     */
     public ResultSet alumnos(String email_profe){
          
-         String password = "1234";
          ResultSet rs=null;
     
         try{ 
@@ -1029,7 +1035,6 @@ public ConnectDB(){}
     */
     public ResultSet carteles_gandores (int peticion){
          
-         String password = "1234";
          ResultSet rs=null;
          if ( peticion == 1 || peticion==2){
             try{
@@ -1066,7 +1071,6 @@ public ConnectDB(){}
     */
     public ResultSet respuestas_cartel (int id_Cartel){
          
-         String password = "1234";
          ResultSet rs=null;
         
             try{
