@@ -25,27 +25,27 @@ public ConnectDB(){}
             System.out.println("Inserccion de paco  alumno correcta");
         }
         // Prueba a insertar un cartel
-        HaPodido= insert_cartel(1,"palotes@gm","1",2018,"La Paloteada","doblementePalote");
+        HaPodido= insert_cartel(1,"palotes@gm","1",2018,"Agua","Link_cartel_1_agua");
         if (HaPodido==1){
             System.out.println("Inserccion de paco correcta");
         }
         //Prueba a Insertar una pregunta
-        HaPodido= insert_pregunta(1,1,"Paloteando al palote,palote");
+        HaPodido= insert_pregunta(1,1,"¿Cual fue el coste del tratamiento de aguas en Zaragoza el agno pasado?");
         if (HaPodido==1){
             System.out.println("Inserccion pregunta correcta");
         }
         //Prueba a Insertar un comentario
-        HaPodido= insert_comentario(1,1,"Paco","El paloteador maximo","0");
+        HaPodido= insert_comentario(1,1,"Paco","Me encanto la pregunta, muy informativa","0");
         if (HaPodido==1){
             System.out.println("Inserccion comentario correcta");
         }
         //Prueba a Insertar una respuesta
-        HaPodido= insert_respuesta(1,1,1,"Paloteando ando",0,"1");
+        HaPodido= insert_respuesta(1,1,1,"5,4 millones de euros",0,"T");
         if (HaPodido==1){
             System.out.println("Inserccion de respuesta correcta");
         }
         //Prueba a Insertar un reto
-        HaPodido= insert_reto(2,1,"A reciclar");
+        HaPodido= insert_reto(2,1,"Animate a recoger 5 latas en 5 dias ");
         if (HaPodido==1){
             System.out.println("Inserccion de reto correcto");
         }
@@ -71,7 +71,7 @@ public ConnectDB(){}
             System.out.println("Inserccion de paco correcta");
         }
         
-        HaPodido= insert_cartel(200,"alum@unizar.es","F",2011,"Agua","link");
+        HaPodido= insert_cartel(200,"alum@unizar.es","F",2011,"Agua","link_cartel_2");
         if (HaPodido==1){
             System.out.println("Inserccion de cartel correcta");
         }
