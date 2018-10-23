@@ -1093,6 +1093,32 @@ public ConnectDB(){}
        
     }
     
+    /*
+        Listado de respuestas a una pregunta
+    */
+    public ResultSet listado_respuestas (int id_Pregunta){
+         
+         ResultSet rs=null;
+        
+            try{
+
+                    Connection conection = DriverManager.getConnection(url, username, password);
+                    Statement pet = conection.createStatement(); 
+                    String query = "SELECT r.id, r.cuerpo, r.veces, r.ganador\n" +
+                                    "FROM pregunta p left join respuesta r on p.id=r.idP\n" +
+                                    "WHERE p.id="+ id_Pregunta +";" ;
+
+                    rs=pet.executeQuery (query);
+
+                    return rs;
+
+
+            } catch(SQLException ex){
+                 System.out.println(ex.getMessage());
+                 return rs;
+            }     
+    }
+    
         /*
         Comprueba si el id ya existe
     */
