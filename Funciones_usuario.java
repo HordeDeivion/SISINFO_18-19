@@ -166,4 +166,108 @@ public class Funciones_usuario {
             }
     }
     
+    /*
+    --------------------------------------------    CONSULTAS           --------------------------------------------------
+    ----------------------------------------------------------------------------------------------------------------------
+    */
+   
+    //Preguntas asociadas a un cartel
+    public void pregunta_asociada_cartel_func(int idCartel){
+        System.out.println("Buscando pregunta asociada al cartel: "+idCartel);
+        DBConnect d = new DBConnect();  
+        try{
+            ResultSet rs= d.pregunta_asociada_cartel(idCartel);
+            while (rs.next()){
+                    int idPregunta = rs.getInt("id");
+                    String tituloPreg = rs.getString("titulo");
+                    System.out.format("%s, %s\n", idPregunta, tituloPreg);
+            }
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+        }
+    }
+    
+    //Carteles asociados a un tema
+    public void carteles_asociados_tema_func(String tema){
+        System.out.println("Buscando carteles del tema: "+tema);
+        DBConnect d = new DBConnect();  
+        try{
+            ResultSet rs= d.carteles_asociados_tema(tema);
+            while (rs.next()){
+                    int idCartel = rs.getInt("id");
+                    String link = rs.getString("link");
+                    System.out.format("%s, %s\n", idCartel, link);
+            }
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+        }
+    }    
+    
+    
+    //Carteles ganadores por año
+    public void carteles_ganadores_anyo_func(int anyo){
+        System.out.println("Buscando carteles ganadores del año: "+anyo);
+        DBConnect d = new DBConnect();  
+        try{
+            ResultSet rs= d.carteles_ganadores_anyo(anyo);
+            while (rs.next()){
+                    int idCartel = rs.getInt("id");
+                    String link = rs.getString("link");
+                    System.out.format("%s, %s\n", idCartel, link);
+            }
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+        }
+    }
+    
+    
+    //Retos asociados a un cartel
+    public void retos_asociados_cartel_func(int idCartel){
+        System.out.println("Buscando retos asociados al cartel: "+idCartel);
+        DBConnect d = new DBConnect();  
+        try{
+            ResultSet rs= d.carteles_ganadores_anyo(idCartel);
+            while (rs.next()){
+                    int idReto = rs.getInt("id");
+                    String descripcion = rs.getString("descripcion");
+                    System.out.format("%s, %s\n", idReto, descripcion);
+            }
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+        }
+    }
+    
+    //Comentarios pendientes dirigidos a los alumnos de un profesor
+    public void comentarios_pendientes_func(String emailProf){
+        System.out.println("Buscando comentario pendientes para profesor: "+emailProf);
+        DBConnect d = new DBConnect();  
+        try{
+            ResultSet rs= d.comentarios_pendientes(emailProf);
+            while (rs.next()){
+                    int idCartel = rs.getInt("id");
+                    String link = rs.getString("link");
+                    System.out.format("%s, %s\n", idCartel, link);
+            }
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+        }
+    }
+    
+    //Carteles asociados a un alumno
+    public void carteles_alum_func(String emailAlum){
+        System.out.println("Buscando carteles del alumno: "+emailAlum);
+        DBConnect d = new DBConnect();  
+        try{
+            ResultSet rs= d.carteles_alum(emailAlum);
+            while (rs.next()){
+                    int idComment = rs.getInt("id");
+                    String nombre = rs.getString("nombre");
+                    String cuerpo = rs.getString("cuerpo");
+                    System.out.format("%s, %s, %s\n", idComment, nombre, cuerpo);
+            }
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+        }
+    }
+    
 }
