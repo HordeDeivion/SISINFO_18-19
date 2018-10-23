@@ -9,8 +9,8 @@ public class ConnectDB {
     static String username = "root";
     static String password = "1234";
     static String url = "jdbc:mysql://localhost:3306/"+Nombre_DB+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
-    /**
-     * @param args the command line arguments
+    /*
+     * Main de prueba de las funciones de acceso y modificacion de la base de datos
      */
 public ConnectDB(){}
     public static void main(String[] args) {
