@@ -2,7 +2,10 @@ package ConnectDB;
 
 import java.sql.*;
 import java.io.*;
-
+/**
+ *
+ * Autores: Jose Manuel Romero ,Ignacio Palacios, David Ubide
+ */
 
 public class ConnectDB {
     static String Nombre_DB= "sis_18";
