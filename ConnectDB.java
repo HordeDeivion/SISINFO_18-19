@@ -1,5 +1,8 @@
 package ConnectDB;
+/*
+Autores: José Manuel Romero, Ignacio Palacios, David Ubide
 
+*/
 import java.sql.*;
 import java.io.*;
 
@@ -9,7 +12,7 @@ public class ConnectDB {
     static String username = "root";
     static String password = "1234";
     /**
-     * @param args the command line arguments
+     *  Proceso Main de prueba
      */
     public static void main(String[] args) {
         //Prueba a insertar un profesor
@@ -127,11 +130,11 @@ public class ConnectDB {
     }
     
     /*
-                    INSERCCIONES
+     ----------------------------------               INSERCCIONES                  ----------------------------------------------
     
     */
     
-    
+
       /*
     nombre: Nombre profesor
     a1: Primer apellido
@@ -400,7 +403,8 @@ public class ConnectDB {
     }
     
     /*
-            BORRADOS
+     -------------------------------------------------       BORRADOS               -------------------------------------------------
+     --------------------------------------------------------------------------------------------------------------------------------
     */
     public static int delete_profesor(String email){
          String url = "jdbc:mysql://localhost:3306/"+Nombre_DB+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -627,8 +631,10 @@ public class ConnectDB {
         return Puede;
     }
     
-    
-    //UPDATES
+    /*
+     ---------------------------------------------------    UPDATES     -----------------------------------------------------
+    -------------------------------------------------------------------------------------------------------------------------
+    */
     public static int update_profe(String nom, String a1, String a2, String contra, String em,String asociado ){
          String url = "jdbc:mysql://localhost:3306/"+Nombre_DB+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
          
@@ -886,6 +892,10 @@ public class ConnectDB {
         }
         return Puede;
     }
+    /*
+    --------------------------------------------    CONSULTAS           --------------------------------------------------
+    ----------------------------------------------------------------------------------------------------------------------
+    */
     
     //Preguntas asociadas a un cartel
     public static int pregunta_asociada_cartel(int idCartel){
