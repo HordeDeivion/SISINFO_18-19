@@ -1,9 +1,7 @@
-drop table respuesta;
-drop table pregunta;
-drop table comentario;
-drop table cartel;
-drop table alumno;
-drop table profesor;
+--AUTORES
+--	Ignacio Palacios Gracia		NIP:739359
+--	David Ubide Alaiz		NIP:736520
+--	José Manuel Romero		NIP:740914
 
 
 CREATE TABLE profesor(
@@ -25,7 +23,7 @@ CREATE TABLE alumno(
 	contrasena  VARCHAR(20),
 	emailprofe  VARCHAR(70),
 	CONSTRAINT alumnopk PRIMARY KEY(email),
-	CONSTRAINT emailProfeFK FOREIGN KEY (emailprofe) REFERENCES profesor(email)
+	CONSTRAINT emailProfeFK FOREIGN KEY (emailprofe) REFERENCES profesor(email) ON DELETE CASCADE
 );
 
 
@@ -37,7 +35,7 @@ CREATE TABLE cartel (
 	tema        VARCHAR(20) NOT NULL,
 	link        VARCHAR(200) NOT NULL,
 	CONSTRAINT cartelpk PRIMARY KEY (id),
-	CONSTRAINT emailFK FOREIGN KEY (emailA) REFERENCES alumno(email)
+	CONSTRAINT emailFK FOREIGN KEY (emailA) REFERENCES alumno(email) ON DELETE CASCADE
 );
 
 CREATE TABLE comentario(
@@ -47,7 +45,7 @@ CREATE TABLE comentario(
 	cuerpo      VARCHAR(600),
 	pendiente   CHAR(1),
 	CONSTRAINT comentariopk PRIMARY KEY(idC),
-	CONSTRAINT cartelfkcoment FOREIGN KEY (idCartel) REFERENCES cartel(id)
+	CONSTRAINT cartelfkcoment FOREIGN KEY (idCartel) REFERENCES cartel(id) ON DELETE CASCADE
 );
 
 CREATE TABLE pregunta(
@@ -55,7 +53,7 @@ CREATE TABLE pregunta(
 	titulo      VARCHAR(600) NOT NULL,
 	idCartel    INT(20),
 	CONSTRAINT preguntapk 	PRIMARY KEY(id,idCartel),
-	CONSTRAINT cartelfk FOREIGN KEY (idCartel) REFERENCES cartel(id)
+	CONSTRAINT cartelfk FOREIGN KEY (idCartel) REFERENCES cartel(id) ON DELETE CASCADE
 );
 
 
@@ -65,7 +63,7 @@ CREATE TABLE reto(
 	descripcion      VARCHAR(600) NOT NULL,
 	idCartel    INT(20),
 	CONSTRAINT retoapk 	PRIMARY KEY(id,idCartel),
-	CONSTRAINT cartelfkreto FOREIGN KEY (idCartel) REFERENCES cartel(id)
+	CONSTRAINT cartelfkreto FOREIGN KEY (idCartel) REFERENCES cartel(id) ON DELETE CASCADE
 );
 
 
@@ -77,14 +75,5 @@ CREATE TABLE respuesta(
 	veces       INT(10),
 	ganador     CHAR(1),
 	CONSTRAINT respuestapk  PRIMARY KEY(idR,idC,idP),
-	CONSTRAINT preguntafkrespuesta FOREIGN KEY (idP, idC) REFERENCES pregunta(id, idCartel)
+	CONSTRAINT preguntafkrespuesta FOREIGN KEY (idP, idC) REFERENCES pregunta(id, idCartel) ON DELETE CASCADE
 );
-
-
-INSERT INTO profesor(nombre,apellido1,apellido2,email,contrasena,emailprofe) VALUES('uno','dos','tres','uno@unizar.es','tablahash',null);
-INSERT INTO alumno(nombre,apellido1,apellido2,email,contrasena,emailprofe) VALUES('alum','ape','ape2','alum@unizar.es','hashtable','uno@unizar.es');
-INSERT INTO cartel(id,emailA,ganador,agno,tema,link) VALUES(567,'alum@unizar.es','F',2010,'Agua','link');
-INSERT INTO comentario(idC,idCartel,nombre,cuerpo,pendiente) VALUES(22,567,'coment','buenos dias andalucia','F');
-INSERT INTO pregunta(id,titulo,idCartel) VALUES(10,'pregunting',567);
-INSERT INTO respuesta(idR,idC,idP,cuerpo,veces,ganador) VALUES(100,567,10,'U mad?', 73, 'T');
-INSERT INTO reto(id,descripcion,idCartel) VALUES(69,'Te reto a que te mueras', 567);
