@@ -12,11 +12,10 @@ import ConnectDB.*;
  */
 public class Funciones_usuario {
     
-    
-        //  Inserta un Profesor a nuestra base de datos.
+        // Inserta un profesor
         public void insertar_profesor (String Nombre, String apellido1,String apellido2,String contrasena,String email,String asociado){
                System.out.println("Insertando "+Nombre+" en nuestra base de datos");
-               ConnectDB d = new ConnectDB();
+               DBConnect d = new DBConnect();
                int puede= d.insert_profe(Nombre,apellido1,apellido2,contrasena,email,asociado);
                if(puede == 0){
                    System.out.println("No ha podido insertar profesor");
@@ -26,43 +25,83 @@ public class Funciones_usuario {
         // Inserta un alumno 
         public void insertar_alumno (String Nombre, String apellido1,String apellido2,String contrasena,String email,String asociado){
                System.out.println("Insertando "+Nombre+" en nuestra base de datos");
-               ConnectDB d = new ConnectDB();
+               DBConnect d = new DBConnect();
                int puede= d.insert_alumno(Nombre,apellido1,apellido2,contrasena,email,asociado);
                 if(puede == 0){
                    System.out.println("No ha podido insertar alumno");
                }
         }
 
-       public void insertar_cartel(int id, String mail, String ganar, int agno, String tema,String link ){
+       public void insertar_cartel(String mail, String ganar, int agno, String tema,String link ){
            System.out.println("Insertando cartel asociado al mail: "+mail+" en nuestra base de datos");
-               ConnectDB d = new ConnectDB();
+               DBConnect d = new DBConnect();
+            int id=(int)(Math.random() * ((1500 - 1) + 1)) + 1;
+            boolean salir=d.comprobar_id("cartel",id);
+            while(!salir){
+                id=(int)(Math.random() * ((1500 - 1) + 1)) + 1;
+                salir=d.comprobar_id("cartel",id);
+            }
                int puede= d.insert_cartel(id,mail,ganar,agno,tema,link);
                 if(puede == 0){
                    System.out.println("No ha podido insertar cartel");
                }
        }
-      public void insertar_pregunta(int id, int idC, String titulo ){
+      public void insertar_pregunta(int idC, String titulo ){
             System.out.println("Insertando pregunta: "+titulo+" en nuestra base de datos");
-            ConnectDB d = new ConnectDB();
+            DBConnect d = new DBConnect();
+            int id=(int)(Math.random() * ((1500 - 1) + 1)) + 1;
+            boolean salir=d.comprobar_id("pregunta",id);
+            while(!salir){
+                id=(int)(Math.random() * ((1500 - 1) + 1)) + 1;
+                salir=d.comprobar_id("pregunta",id);
+            }
             int puede= d.insert_pregunta(id,idC,titulo);
             if(puede == 0){
                 System.out.println("No ha podido insertar pregunta");
             }
       }
-    public void insertar_comentario(int id, int idC, String nombre, String cuerpo,String pend ){
+    public void insertar_comentario(int idC, String nombre, String cuerpo,String pend ){
             System.out.println("Insertando comentario del usuario: "+nombre+" en nuestra base de datos");
-            ConnectDB d = new ConnectDB();
+            DBConnect d = new DBConnect();
+            int id=(int)(Math.random() * ((1500 - 1) + 1)) + 1;
+            boolean salir=d.comprobar_id("comentario",id);
+            while(!salir){
+                id=(int)(Math.random() * ((1500 - 1) + 1)) + 1;
+                salir=d.comprobar_id("comentario",id);
+            }
             int puede= d.insert_comentario(id,idC,nombre,cuerpo,pend);
             if(puede == 0){
                 System.out.println("No ha podido insertar comentario");
             }
      }
-    public static void insertar_reto(int id, int idC, String descripcion ){
+    public void insertar_reto(int idC, String descripcion ){
             System.out.println("Insertando reto : " +descripcion+ " en nuestra base de datos");
-            ConnectDB d = new ConnectDB();
+            DBConnect d = new DBConnect();
+            int id=(int)(Math.random() * ((1500 - 1) + 1)) + 1;
+            boolean salir=d.comprobar_id("reto",id);
+            while(!salir){
+                id=(int)(Math.random() * ((1500 - 1) + 1)) + 1;
+                salir=d.comprobar_id("reto",id);
+            }
             int puede= d.insert_reto(id,idC,descripcion);
             if(puede == 0){
                 System.out.println("No ha podido insertar reto");
+            }
+    }
+    
+    
+    public static void insertar_respuesta(int idC, int idP, String cuerpo, String ganador ){
+            System.out.println("Insertando respuesta : " +cuerpo+ " en nuestra base de datos");
+            DBConnect d = new DBConnect();
+            int id=(int)(Math.random() * ((1500 - 1) + 1)) + 1;
+            boolean salir=d.comprobar_id("respuesta",id);
+            while(!salir){
+                id=(int)(Math.random() * ((1500 - 1) + 1)) + 1;
+                salir=d.comprobar_id("respuesta",id);
+            }
+            int puede= d.insert_respuesta(id,idC,idP, cuerpo, 0, ganador);
+            if(puede == 0){
+                System.out.println("No ha podido insertar respuesta");
             }
     }
     
@@ -165,6 +204,15 @@ public class Funciones_usuario {
                 System.out.println("No se ha modificar");
             }
     }
+    
+    public static void modificar_respuesta(int id, int idC, int idP, String cuerpo, int veces, String ganador ){
+            System.out.println("Modificando respuesta: "+id+" en nuestra base de datos");
+            DBConnect d = new DBConnect();
+            int puede= d.update_respuesta(id,idC,idP,cuerpo,veces+1,ganador);
+            if(puede == 0){
+                System.out.println("No se ha podido modificar");
+            }
+      } 
     
     /*
     --------------------------------------------    CONSULTAS           --------------------------------------------------
