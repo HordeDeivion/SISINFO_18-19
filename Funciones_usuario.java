@@ -6,30 +6,47 @@
 package Funciones_usuario;
 import ConnectDB.*;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  *
  * Autores: Jose Manuel Romero ,Ignacio Palacios, David Ubide
  */
 public class Funciones_usuario {
     
-        // Inserta un profesor
-        public void insertar_profesor (String Nombre, String apellido1,String apellido2,String contrasena,String email,String asociado){
+        //  Inserta un Profesor a nuestra base de datos.
+        public static void insertar_profesor (String Nombre, String apellido1,String apellido2,String contrasena,String email,String asociado){
                System.out.println("Insertando "+Nombre+" en nuestra base de datos");
-               DBConnect d = new DBConnect();
-               int puede= d.insert_profe(Nombre,apellido1,apellido2,contrasena,email,asociado);
-               if(puede == 0){
-                   System.out.println("No ha podido insertar profesor");
-               }
+               try{
+                    MessageDigest md= MessageDigest.getInstance("SHA-512");
+                    md.update(contrasena.getBytes());
+                    byte[] mb = md.digest();
+                    DBConnect d = new DBConnect();
+                    int puede= d.insert_profe(Nombre,apellido1,apellido2,mb,email,asociado);
+                    if(puede == 0){
+                        System.out.println("No ha podido insertar profesor");
+                    }
+               } catch (NoSuchAlgorithmException e) {
+                    //Error
+                }
         }
 
         // Inserta un alumno 
-        public void insertar_alumno (String Nombre, String apellido1,String apellido2,String contrasena,String email,String asociado){
+        public static void insertar_alumno (String Nombre, String apellido1,String apellido2,String contrasena,String email,String asociado){
                System.out.println("Insertando "+Nombre+" en nuestra base de datos");
-               DBConnect d = new DBConnect();
-               int puede= d.insert_alumno(Nombre,apellido1,apellido2,contrasena,email,asociado);
-                if(puede == 0){
-                   System.out.println("No ha podido insertar alumno");
-               }
+               try{
+                    MessageDigest md= MessageDigest.getInstance("SHA-512");
+                    md.update(contrasena.getBytes());
+                    byte[] mb = md.digest();
+                    DBConnect d = new DBConnect();
+                    int puede= d.insert_alumno(Nombre,apellido1,apellido2,mb,email,asociado);
+                    if(puede == 0){
+                        System.out.println("No ha podido insertar profesor");
+                    }
+               } catch (NoSuchAlgorithmException e) {
+                    //Error
+                }
         }
 
        public void insertar_cartel(String mail, String ganar, int agno, String tema,String link ){
