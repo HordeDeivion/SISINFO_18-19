@@ -111,22 +111,6 @@ public class ConnectDB {
         if (HaPodido==1){
             System.out.println("borrado correcto");
         }
-        HaPodido= pregunta_asociada_cartel(1);
-        if (HaPodido==1){
-            System.out.println("pregunta_asociada_cartel correcto");
-        }
-        HaPodido= carteles_asociados_tema("Agua");
-        if (HaPodido==1){
-            System.out.println("carteles_asociados_tema correcto");
-        }  
-        HaPodido=carteles_ganadores_anyo(2018);
-        if (HaPodido==1){
-            System.out.println("carteles_ganadores_anyo correcto");
-        } 
-        HaPodido=retos_asociados_cartel(1);
-        if (HaPodido==1){
-            System.out.println("retos_asociados_cartel correcto");
-        }
     }
     
     /*
@@ -898,11 +882,10 @@ public class ConnectDB {
     */
     
     //Preguntas asociadas a un cartel
-    public static int pregunta_asociada_cartel(int idCartel){
+    public static ResultSet pregunta_asociada_cartel(int idCartel){
          String url = "jdbc:mysql://localhost:3306/"+Nombre_DB+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
          
-        
-         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
+         ResultSet rs=null;
          try{
                 String comando="SELECT p.id, p.titulo\n" +
                                 "FROM cartel c left join pregunta p on c.id=p.idCartel\n" +
@@ -913,28 +896,21 @@ public class ConnectDB {
                 PreparedStatement al = conection.prepareStatement(comando);
                 // Ejecuta la instruccion en la BBDD
                 // Puede == 1 si y solo si ha podido insertar
-                ResultSet rs =al.executeQuery();
-                while (rs.next()){
-                    int idPregunta = rs.getInt("id");
-                    String tituloPreg = rs.getString("titulo");
-                    System.out.format("%s, %s\n", idPregunta, tituloPreg);
-                }
+                rs =al.executeQuery();
+                return rs;
               
         } catch(SQLException ex){
              System.out.println(ex.getMessage());
-             Puede = -1;
-             return Puede;
+             return rs;
 
         }
-        return Puede;
     }   
     
     //Carteles asociados a un tema
-    public static int carteles_asociados_tema(String tema){
+    public ResultSet carteles_asociados_tema(String tema){
          String url = "jdbc:mysql://localhost:3306/"+Nombre_DB+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
          
-        
-         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
+         ResultSet rs=null;
          try{
                 String comando="SELECT c.id, c.link\n" +
                                "FROM cartel c\n" +
@@ -945,28 +921,21 @@ public class ConnectDB {
                 PreparedStatement al = conection.prepareStatement(comando);
                 // Ejecuta la instruccion en la BBDD
                 // Puede == 1 si y solo si ha podido insertar
-                ResultSet rs =al.executeQuery();
-                while (rs.next()){
-                    int idCartel = rs.getInt("id");
-                    String link = rs.getString("link");
-                    System.out.format("%s, %s\n", idCartel, link);
-                }
+                rs =al.executeQuery();
+                return rs;
               
         } catch(SQLException ex){
              System.out.println(ex.getMessage());
-             Puede = -1;
-             return Puede;
+             return rs;
 
         }
-        return Puede;
     } 
     
     //Carteles ganadores por año
-    public static int carteles_ganadores_anyo(int anyo){
+    public ResultSet carteles_ganadores_anyo(int anyo){
          String url = "jdbc:mysql://localhost:3306/"+Nombre_DB+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
          
-        
-         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
+         ResultSet rs=null;
          try{
                 String comando="SELECT c.id, c.link\n" +
                                 "FROM cartel c\n" +
@@ -977,28 +946,21 @@ public class ConnectDB {
                 PreparedStatement al = conection.prepareStatement(comando);
                 // Ejecuta la instruccion en la BBDD
                 // Puede == 1 si y solo si ha podido insertar
-                ResultSet rs =al.executeQuery();
-                while (rs.next()){
-                    int idCartel = rs.getInt("id");
-                    String link = rs.getString("link");
-                    System.out.format("%s, %s\n", idCartel, link);
-                }
+                rs =al.executeQuery();
+                return rs;
               
         } catch(SQLException ex){
              System.out.println(ex.getMessage());
-             Puede = -1;
-             return Puede;
+             return rs;
 
         }
-        return Puede;
     }
     
     //Retos asociados a un cartel
-    public static int retos_asociados_cartel(int idCartel){
+    public ResultSet retos_asociados_cartel(int idCartel){
          String url = "jdbc:mysql://localhost:3306/"+Nombre_DB+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
          
-        
-         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
+         ResultSet rs=null;
          try{
                 String comando="SELECT r.id, r.descripcion\n" +
                                 "FROM cartel c left join reto r on c.id=r.idCartel\n" +
@@ -1009,20 +971,42 @@ public class ConnectDB {
                 PreparedStatement al = conection.prepareStatement(comando);
                 // Ejecuta la instruccion en la BBDD
                 // Puede == 1 si y solo si ha podido insertar
-                ResultSet rs =al.executeQuery();
+                rs =al.executeQuery();
                 while (rs.next()){
                     int idReto = rs.getInt("id");
                     String descripcion = rs.getString("descripcion");
                     System.out.format("%s, %s\n", idReto, descripcion);
                 }
+                return rs;
               
         } catch(SQLException ex){
              System.out.println(ex.getMessage());
-             Puede = -1;
-             return Puede;
+             return rs;
 
         }
-        return Puede;
+    }
+    
+    //Comentarios pendientes dirigidos a los alumnos de un profesor
+    public static ResultSet comentarios_pendientes(String emailProf){
+         String url = "jdbc:mysql://localhost:3306/"+Nombre_DB+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+         
+         ResultSet rs=null;
+         try{
+                String comando="SELECT com.idC, com.nombre, com.cuerpo\n" +
+"	FROM ((profesor prof left join alumno a on prof.email = a.emailprofe) left join cartel c on a.email=c.emailA) left join comentario com on c.id=com.idCartel\n" +
+"	WHERE prof.email='" + emailProf + "' AND com.pendiente='T';";
+                Connection conection = DriverManager.getConnection(url, username, password);
+                
+                System.out.println("Buscando comentarios pendientes del profesor: "+emailProf);
+                PreparedStatement al = conection.prepareStatement(comando);
+                rs =al.executeQuery();
+                return rs;
+              
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+             return rs;
+
+        }
     }
     
     /*
