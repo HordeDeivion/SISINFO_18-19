@@ -142,7 +142,7 @@ public ConnectDB(){}
     em: email del profesor
     asociado = email del profe asociado
     */
-    public static int insert_profe(String nom, String a1, String a2, String contra, String em,String asociado ){
+    public static int insert_profe(String nom, String a1, String a2, byte[] contra, String em,String asociado ){
           
          
         
@@ -180,7 +180,7 @@ public ConnectDB(){}
     em: email del profesor
     asociado = email del profe asociado
     */
-    public static int insert_alumno(String nom, String a1, String a2, String contra, String em,String asociado ){
+    public static int insert_alumno(String nom, String a1, String a2, byte[] contra, String em,String asociado ){
           
          
         
