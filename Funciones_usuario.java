@@ -270,4 +270,61 @@ public class Funciones_usuario {
         }
     }
     
+        //Devuelve el listado de alumnos asociados a un profesor y su email
+    public void alumnos_func(String email_profe){
+        System.out.println("Buscando alumnos del profesor: "+email_profe);
+        DBConnect d = new DBConnect();  
+        try{
+            ResultSet rs= d.alumnos(email_profe);
+            while (rs.next()){
+                    String nombre = rs.getString("nombre");
+                    String apellido1 = rs.getString("apellido1");
+                    String apellido2 = rs.getString("apellido2");
+                    String email = rs.getString("email");
+                    System.out.format("%s, %s, %s, %s\n", nombre, apellido1, apellido2, email);
+            }
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+        }
+    }
+    
+    /*
+        Devuelve el listado de carteles ganadores segun peticion:
+            1 - Ordenados por agno
+            2 - Ordenados por agno y tematica
+    */
+    public void carteles_ganadores_func (int peticion){
+        System.out.println("Buscando carteles ganadores segun peticion: "+peticion);
+        DBConnect d = new DBConnect();  
+        try{
+            ResultSet rs= d.carteles_gandores(peticion);
+            while (rs.next()){
+                    int idCartel = rs.getInt("id");
+                    String link = rs.getString("link");
+                    int agno = rs.getInt("agno");
+                    String tema = rs.getString("tema");
+                    System.out.format("%s, %s, %s, %s\n", idCartel, link, agno,tema);
+            }
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+        }
+    }
+    
+    //Devuelve el listado de todas las respuestas asociadas a un cartel
+    public void respuestas_cartel_func (int id_Cartel){
+        System.out.println("Buscando comentarios asociados a un cartel: "+id_Cartel);
+        DBConnect d = new DBConnect();  
+        try{
+            ResultSet rs= d.respuestas_cartel(id_Cartel);
+            while (rs.next()){
+                    int idCom = rs.getInt("id");
+                    String nombre = rs.getString("nombre");
+                    String cuerpo = rs.getString("cuerpo");
+                    System.out.format("%s, %s, %s\n", idCom, nombre,cuerpo);
+            }
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+        }
+    }
+    
 }
