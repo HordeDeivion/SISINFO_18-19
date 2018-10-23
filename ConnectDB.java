@@ -99,7 +99,7 @@ public ConnectDB(){}
             System.out.println("Update de pregunta correcta");
         }
         
-        HaPodido= update_respuesta(1, 1, 1, "Callese",123, "");
+        HaPodido= update_respuesta(1, 1, 1, "HEllo",123, "");
         if (HaPodido==1){
             System.out.println("Update de paco correcta");
         }
