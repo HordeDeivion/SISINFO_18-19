@@ -1092,6 +1092,38 @@ public ConnectDB(){}
         
        
     }
+    
+        /*
+        Comprueba si el id ya existe
+    */
+    public boolean comprobar_id(String tabla, double newID){
+         
+         ResultSet rs=null;
+         boolean aver=false;
+    
+        try{ 
+                Connection conection = DriverManager.getConnection(url, username, password);
+                Statement pet = conection.createStatement(); 
+                String query="select "+tabla+".id FROM "+tabla+" WHERE "+tabla+".id="+newID+";";
+                rs=pet.executeQuery (query);
+                
+                if(!rs.next()){
+                    aver=true;
+                }
+                /*while (rs.next()){
+                    int idCartel = rs.getInt("id");
+                    System.out.format("%s\n", idCartel);
+                    if(idCartel!=){ aver=true; }
+                }  */
+                return aver;
+                
+              
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+             return false;
+        }
+       
+    }
 }
 
 
