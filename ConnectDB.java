@@ -2,6 +2,9 @@ package ConnectDB;
 
 import java.sql.*;
 import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
 /**
  *
  * Autores: Jose Manuel Romero ,Ignacio Palacios, David Ubide
@@ -1122,7 +1125,228 @@ public ConnectDB(){}
             }     
     }
     
+    /*
+        comprobar email y contraseña de prof (para login)
+    */
+    public boolean comprobar_login_prof (String email_profe, String contrasena){
+         
+         ResultSet rs=null;
+         boolean puede=true;
+        
+            try{
+                try{
+                    MessageDigest md= MessageDigest.getInstance("SHA-512");
+                    md.update(contrasena.getBytes());
+                    byte[] mb = md.digest();
+                    Connection conection = DriverManager.getConnection(url, username, password);
+                    Statement pet = conection.createStatement(); 
+                    String query = "SELECT *\n" +
+                                    "FROM profesor p\n" +
+                                    "WHERE p.email='"+ email_profe +"' AND p.contrasena='" + md + "';" ;
+
+                    rs=pet.executeQuery (query);
+                    if(!rs.next()){
+                        puede=false;
+                    }
+                    return puede;
+
+                } catch(NoSuchAlgorithmException e){
+                    System.out.println("No se ha podido cifrar la contraseña");
+                    return false;
+                }
+            } catch(SQLException ex){
+                 System.out.println(ex.getMessage());
+                 return false;
+            }     
+    }
+    
         /*
+        comprobar email y contraseña de alumno (para login)
+    */
+    public boolean comprobar_login_alumno (String email_alumno, String contrasena){
+         
+         ResultSet rs=null;
+         boolean puede=true;
+        
+            try{
+                try{
+                    MessageDigest md= MessageDigest.getInstance("SHA-512");
+                    md.update(contrasena.getBytes());
+                    byte[] mb = md.digest();
+                    Connection conection = DriverManager.getConnection(url, username, password);
+                    Statement pet = conection.createStatement(); 
+                    String query = "SELECT *\n" +
+                                    "FROM alumno a\n" +
+                                    "WHERE a.email='"+ email_alumno +"' AND a.contrasena='" + md + "';" ;
+
+                    rs=pet.executeQuery (query);
+                    if(!rs.next()){
+                        puede=false;
+                    }
+                    return puede;
+
+                } catch(NoSuchAlgorithmException e){
+                    System.out.println("No se ha podido cifrar la contraseña");
+                    return false;
+                }
+            } catch(SQLException ex){
+                 System.out.println(ex.getMessage());
+                 return false;
+            }     
+    }
+    
+    
+    //Preguntas asociadas a un alumno
+    public ResultSet preguntas_alum(String emailAlum){  
+         ResultSet rs=null;
+         try{
+                String comando="SELECT p.id, p.titulo, p.idCartel\n" +
+                                "FROM (alumno a left join cartel c on a.email=c.emailA) left join pregunta p on c.id=p.idCartel\n" +
+                                "WHERE c.emailA='" + emailAlum + "';";
+                Connection conection = DriverManager.getConnection(url, username, password);
+                PreparedStatement al = conection.prepareStatement(comando);
+                rs =al.executeQuery();
+                return rs;
+              
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+             return rs;
+
+        }
+    }
+    
+    
+        //Retos asociados a un alumno
+    public ResultSet retos_alum(String emailAlum){  
+         ResultSet rs=null;
+         try{
+                String comando="SELECT r.id, r.descripcion, r.idCartel\n" +
+                                "FROM (alumno a left join cartel c on a.email=c.emailA) left join reto r on c.id=r.idCartel\n" +
+                                "WHERE c.emailA='"+emailAlum+"';";
+                Connection conection = DriverManager.getConnection(url, username, password);
+                PreparedStatement al = conection.prepareStatement(comando);
+                rs =al.executeQuery();
+                return rs;
+              
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+             return rs;
+
+        }
+    }
+    
+    
+    //Cuenta de notificaciones
+    public int cuenta_notificaciones(String emailProf){  
+         ResultSet rs=null;
+         int veces=-1;
+         try{
+                String comando="SELECT DISTINCT count(*) as cuenta\n" +
+                                "FROM ((profesor p left join alumno a on p.email=a.emailprofe) left join cartel c on a.email=c.emailA) left join comentario com on c.id=com.idCartel\n" +
+                                "WHERE p.email='"+emailProf+"' AND com.pendiente='T';";
+                Connection conection = DriverManager.getConnection(url, username, password);
+                PreparedStatement al = conection.prepareStatement(comando);
+                rs =al.executeQuery();
+                while (rs.next()){
+                    veces = rs.getInt("cuenta");
+                }
+                return veces;
+              
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+             return veces;
+
+        }
+    }
+    
+    
+    /*
+        Listado de carteles de este año
+    */
+    public ResultSet listado_carteles_anyoactual (){
+         
+         ResultSet rs=null;
+         Calendar cal= Calendar.getInstance();
+         int year= cal.get(Calendar.YEAR);
+        
+            try{
+
+                    Connection conection = DriverManager.getConnection(url, username, password);
+                    Statement pet = conection.createStatement(); 
+                    String query = "SELECT *\n" +
+                                    "FROM cartel c\n" +
+                                    "WHERE c.agno="+year+";";
+
+                    rs=pet.executeQuery (query);
+
+                    return rs;
+
+
+            } catch(SQLException ex){
+                 System.out.println(ex.getMessage());
+                 return rs;
+            }     
+    }
+    
+    
+    /*
+        Temas de este año
+    */
+    public ResultSet temas_anyoactual (){
+         
+         ResultSet rs=null;
+         Calendar cal= Calendar.getInstance();
+         int year= cal.get(Calendar.YEAR);
+        
+            try{
+                    Connection conection = DriverManager.getConnection(url, username, password);
+                    Statement pet = conection.createStatement(); 
+                    String query = "SELECT DISTINCT c.tema\n" +
+                                    "FROM cartel c\n" +
+                                    "WHERE c.agno="+year+";";
+                    rs=pet.executeQuery (query);
+
+                    return rs;
+
+
+            } catch(SQLException ex){
+                 System.out.println(ex.getMessage());
+                 return rs;
+            }     
+    }
+    
+    
+    /*
+        Ganadores por temas de este año
+    */
+    public ResultSet ganadorestema_anyoactual (){
+         
+         ResultSet rs=null;
+         Calendar cal= Calendar.getInstance();
+         int year= cal.get(Calendar.YEAR);
+        
+            try{
+
+                    Connection conection = DriverManager.getConnection(url, username, password);
+                    Statement pet = conection.createStatement(); 
+                    String query = "SELECT c.id, c.tema\n" +
+                                    "FROM cartel c\n" +
+                                    "WHERE c.ganador='T' AND c.agno="+year+";";
+
+                    rs=pet.executeQuery (query);
+
+                    return rs;
+
+
+            } catch(SQLException ex){
+                 System.out.println(ex.getMessage());
+                 return rs;
+            }     
+    }
+    
+   
+    
+    /*
         Comprueba si el id ya existe
     */
     public boolean comprobar_id(String tabla, double newID){
