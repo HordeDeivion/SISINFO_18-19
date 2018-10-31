@@ -406,4 +406,130 @@ public class Funciones_usuario {
         }
     }
     
+    
+    // comprobar email y contraseña de prof (para login)
+    public static boolean login_profe_func (String email_profe, String contrasena){
+        System.out.println("Buscando cuenta del profesor");
+        DBConnect d = new DBConnect();  
+            boolean conectado= d.comprobar_login_prof(email_profe, contrasena);
+            if(conectado){
+                System.out.println("Profesor encontrado");
+            }
+            else{
+                System.out.println("Profesor NO encontrado");
+            }
+            return conectado;
+    }
+    
+    
+        // comprobar email y contraseña de alumno (para login)
+    public static boolean login_alumno_func (String email_alum, String contrasena){
+        System.out.println("Buscando cuenta del alumno");
+        DBConnect d = new DBConnect();  
+            boolean conectado= d.comprobar_login_alumno(email_alum, contrasena);
+            if(conectado){
+                System.out.println("Alumno encontrado");
+            }
+            else{
+                System.out.println("Alumno NO encontrado");
+            }
+            return conectado;
+    }
+    
+    //Preguntas asociadas a un alumno
+    public static void preguntas_alum_func (String emailAlum){
+        System.out.println("Buscando preguntas asociadas al alumno: "+emailAlum);
+        DBConnect d = new DBConnect();  
+        try{
+            ResultSet rs= d.preguntas_alum(emailAlum);
+            while (rs.next()){
+                    int idPreg = rs.getInt("id");
+                    String titulo = rs.getString("titulo");
+                    int idCartel = rs.getInt("idCartel");
+                    System.out.format("%d, %s, %d\n", idPreg, titulo, idCartel);
+            }
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+        }
+    }
+    
+    
+        //Retos asociados a un alumno
+    public static void retos_alum_func (String emailAlum){
+        System.out.println("Buscando retos asociados al alumno: "+emailAlum);
+        DBConnect d = new DBConnect();  
+        try{
+            ResultSet rs= d.retos_alum(emailAlum);
+            while (rs.next()){
+                    int idRet = rs.getInt("id");
+                    String descripcion = rs.getString("descripcion");
+                    int idCartel = rs.getInt("idCartel");
+                    System.out.format("%d, %s\n", idRet, descripcion, idCartel);
+            }
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+        }
+    }
+    
+    
+    public static int cuenta_notificaciones_func (String emailProf){
+        System.out.println("Contando notificaciones del profesor: "+emailProf);
+        DBConnect d = new DBConnect();  
+        int notif= d.cuenta_notificaciones(emailProf);
+        System.out.format("Tiene %d notificaciones\n", notif);
+        return notif;
+    }
+    
+    //Listado de carteles de este año
+    public static void carteles_anyoactual_func (){
+        System.out.println("Buscando carteles de este año");
+        DBConnect d = new DBConnect();  
+        try{
+            ResultSet rs= d.listado_carteles_anyoactual();
+            while (rs.next()){
+                    /*int idRet = rs.getInt("id");
+                    String descripcion = rs.getString("descripcion");
+                    int idCartel = rs.getInt("idCartel");
+                    System.out.format("%d, %s\n", idRet, descripcion, idCartel);*/
+                    //DEVOLVER TIPO CARTEL
+            }
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+        }
+    }
+    
+    
+    //Temas de este año
+    public static void temas_anyoactual_func (){
+        System.out.println("Buscando temas de este año");
+        DBConnect d = new DBConnect();  
+        try{
+            ResultSet rs= d.temas_anyoactual();
+            while (rs.next()){
+                    String tema = rs.getString("tema");
+                    System.out.format("%s\n", tema);
+            }
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+        }
+    }
+    
+    //Listado de carteles de este año
+    public static void ganadorestema_anyoactual_func (){
+        System.out.println("Buscando carteles ganadores por tema de este año");
+        DBConnect d = new DBConnect();  
+        try{
+            ResultSet rs= d.ganadorestema_anyoactual();
+            while (rs.next()){
+                    /*int idRet = rs.getInt("id");
+                    String descripcion = rs.getString("descripcion");
+                    int idCartel = rs.getInt("idCartel");
+                    System.out.format("%d, %s\n", idRet, descripcion, idCartel);*/
+                    //DEVOLVER TIPO CARTEL
+            }
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+        }
+    }
+    
 }
