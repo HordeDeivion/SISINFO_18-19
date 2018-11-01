@@ -1,4 +1,4 @@
---AUTORES
+-- AUTORES
 --	Ignacio Palacios Gracia		NIP:739359
 --	David Ubide Alaiz		NIP:736520
 --	José Manuel Romero		NIP:740914
