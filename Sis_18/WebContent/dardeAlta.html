@@ -42,17 +42,17 @@
 			<h2>DARSE DE ALTA</h2>
 		</div>
 		<div class = "panel-body">
-		<form name="f2" method="POST" action="InsertaUser.do">
+		<form name="f2" method="post" action="javascript:comprobarClave(this.form)">
 			<h4>* Usuario: </h4>
-			<input id="choose" name="usuario" type="text" required placeholder= "email">
+			<input id="choose" name="i_like" type="email" required placeholder= "email">
 			<h4>* Contraseña: </h4>
-			<input id="choose" type="password" name="pass"pattern="[a-zA-Z0-9]+" name="clave2" required placeholder= "contraseña"><br>
+			<input id="choose"  pattern="[a-zA-Z0-9]+" name="clave2" required placeholder= "contraseña"><br>
 			<h4>* Repite la contraseña: </h4>
-			<input type="text" pattern="[a-zA-Z0-9]+" name="clave3" required placeholder="repite la contraseña">
+			<input type="contraseña" pattern="[a-zA-Z0-9]+" name="clave3" required placeholder="repite la contraseña">
 			<h4>Introduzca su nombre real </h4>
-			<input type="tet" name="nombre" placeholder="nombre">
+			<input type="nombre" name="usuario" placeholder="nombre">
 			<h4>Introduzca sus apellidos </h4>
-			<input type="text" name="apellidos" placeholder="apellidos">
+			<input type="nombre" name="usuario" placeholder="apellidos">
 			<div class="m_options js_quizz_question" id="formulario">
 			
           			
@@ -69,14 +69,13 @@
           			
 				
 			</div>
-				<div class = "panel-footer">
-					<button class= "btn btn-primary" action = "InsertaUser.do" ">Registrarse</button>
-					<button class= "btn btn-warning" onclick="location.href='menuPrincipal.html'">Cancelar</button><br><br>
-				<h4>Una vez registrado, podrá usar la cuenta una vez el docente encargado la apruebe </h4>
-				</div>
 			</form>
 		</div>
-		
+		<div class = "panel-footer">
+			<button class= "btn btn-primary" onclick="location.href='Profesor.html'"">Registrarse</button>
+			<button class= "btn btn-warning" onclick="location.href='menuPrincipal.html'">Cancelar</button><br><br>
+			<h4>Una vez registrado, podrá usar la cuenta una vez el docente encargado la apruebe </h4>
+		</div>
 		</div>
 	</div>
 	</div>
