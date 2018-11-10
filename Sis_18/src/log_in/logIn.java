@@ -42,36 +42,56 @@ public class logIn extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("He llegado");
-		List<String> errors = new ArrayList<String>(); 
-
+	//	List<String> errors = new ArrayList<String>(); 
+		Map<String,String> errors = new HashMap<String,String>();
 		String email = request.getParameter("email");
 		System.out.println(email);
-		String pass = request.getParameter("contra");
-		if (email == null || email.equals("")) {
-			errors.add("emailv");
-		}
-		if (pass == null || pass.equals("")) {
-			errors.add("passv");
-		}
+		String pass = request.getParameter("pass");
+		String op = request.getParameter("participacion");
 		if(errors.isEmpty()){
-			try {
-				Funciones_usuario n = new Funciones_usuario();
-				boolean e = n.login_alumno_func(email,pass);
-				HttpSession s = request.getSession();
-				s.setAttribute("nombre", email);
-				response.sendRedirect("menuPrincipal(usuario).jsp");
-			}catch(Exception e) {
-				if (e.getMessage()=="Error usuario") {
-					System.out.println("He llegado");
-					errors.add("emaile");
-					
-				}else if(e.getMessage()=="Error contrasena"){
-					errors.add("passe");
-
+			if (op != "36428") {
+				
+				System.out.println("Soy alumno");
+				try {
+					Funciones_usuario n = new Funciones_usuario();
+					boolean e = n.login_alumno_func(email,pass);
+					HttpSession s = request.getSession();
+					s.setAttribute("nombre", email);
+					response.sendRedirect("perfilUsuario.jsp");
+				}catch(Exception e) {
+					if (e.getMessage()=="Error usuario") {
+						System.out.println("He llegado al java");
+						errors.put("email","Email erroneo");
+						
+					}else if(e.getMessage()=="Error contrasena"){
+						errors.put("pass", "Contraseña incorrecta");
+	
+					}
+					request.setAttribute("errores",errors);
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
+					dispatcher.forward(request,response);
 				}
-				request.setAttribute("errores",errors);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-				dispatcher.forward(request,response);
+			}
+			else {
+				try {
+					Funciones_usuario n = new Funciones_usuario();
+					boolean e = n.login_profe_func(email,pass);
+					HttpSession s = request.getSession();
+					s.setAttribute("nombre", email);
+					response.sendRedirect("Profesor.jsp");
+				}catch(Exception e) {
+					if (e.getMessage()=="Error usuario") {
+						System.out.println("He llegado");
+						errors.put("email","Email erroneo");
+						
+					}else if(e.getMessage()=="Error contrasena"){
+						errors.put("pass", "Contraseña incorrecta");
+	
+					}
+					request.setAttribute("errores",errors);
+					RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+					dispatcher.forward(request,response);
+				}
 			}
 		}
 		else {

@@ -43,14 +43,17 @@ public class SignIn extends HttpServlet {
 		String email = request.getParameter("usuario");
 		String pass = request.getParameter("pass");
 		String nombre = request.getParameter("nombre");
-		String apellidos = request.getParameter("apellidos");
+		String apellido1 = request.getParameter("apellido1");
+		String apellido2 = request.getParameter("apellido2");
+		String emailP = request.getParameter("emailP");
+
 		String op = request.getParameter("participacion");
 		Funciones_usuario user = new Funciones_usuario();
 		if (op == "36428") {
 			// Insertamos alumno.
 			//insertar_profesor (String Nombre, String apellido1,String apellido2,String contrasena,String email,String asociado)
 			try{
-				user.insertar_alumno(nombre,apellidos,apellidos,pass,email,"uno@unizar.es");
+				user.insertar_alumno(nombre,apellido1,apellido2,pass,email,emailP);
 				response.sendRedirect("menuPrincipal(usuario).html");
 			}catch(Exception e) {
 				response.sendRedirect("darAlta.html");
@@ -59,11 +62,11 @@ public class SignIn extends HttpServlet {
 		else {
 			// Profesor.
 			try {
-				user.insertar_profesor(nombre,apellidos,apellidos,pass,email,"uno@unizar.es");
+				user.insertar_profesor(nombre,apellido1,apellido2,pass,email,emailP);
 				response.sendRedirect("menuPrincipal(Profesor).html");
 			}
 			catch(Exception e){
-				response.sendRedirect("darAlta.html");
+				response.sendRedirect("dardeAlta.html");
 			}
 		}
 

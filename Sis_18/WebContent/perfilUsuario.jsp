@@ -1,4 +1,4 @@
-<html>
+<html lang="es">
 <head>
 <title> Perfil Usuario </title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,7 +21,6 @@
       <button class= "btn btn-warning" onclick="location.href='dardebaja.html'" >Darse de baja</button>
       <button class= "btn btn-warning" onclick="location.href='modificarPerfil.html'" >Modificar Perfil</button>
   </div>
-  <p class="navbar-text"><div align="left">Logeado como Jose Manuel Romero</div></p>
   <h1>BIENVENIDO PARTICIPANTE</h1>
   <p>Â¿Que desea hacer?</p> 
 </div>
@@ -33,7 +32,7 @@
           <br> 
  			 <img alt=" Imagen Cartel" src="https://cdn.pixabay.com/photo/2017/10/15/14/14/poster-mockup-2853837_960_720.jpg" width="200px" height="200px" />
           <div class="panel-body">Revisa los carteles con los que has participado</div>
-           <button align="center" class= "btn btn-primary" onclick="location.href='seleccionarCartel.html'">Â¡Revisar!</button>
+           <button align="center" class= "btn btn-primary" onclick="location.href='seleccionarCartel.html'">¡Revisar!</button>
            <br><br>
         </div>
     </div>
@@ -43,7 +42,7 @@
           <br>
           <img alt=" Imagen Cartel" src="http://images4.fanpop.com/image/photos/19300000/Question-mark-quizzes-19322047-300-375.jpg" width="200px" height="200px" />
           <div class="panel-body">Revisa las preguntas que has planteado</div>
-         <button class= "btn btn-primary" onclick="location.href='seleccionarPregunta.html'" >Â¡Revisar!</button>
+         <button class= "btn btn-primary" onclick="location.href='seleccionarPregunta.html'" >¡Revisar!</button>
            <br> <br>
       </div>
     </div>
@@ -53,7 +52,7 @@
              <br> 
              	<img alt=" Imagen Cartel" src="https://image.shutterstock.com/image-photo/hand-changing-word-impossible-possible-450w-540510409.jpg" width="200px" height="200px" />
                  <div class="panel-body">Revisa los retos que has propuesto a los participantes</div>
-          			 <button class= "btn btn-primary" onclick="location.href='seleccionarReto.html'">Â¡Revisar!</button>
+          			 <button class= "btn btn-primary" onclick="location.href='seleccionarReto.html'">¡Revisar!</button>
              <br><br>
         </div>
     </div>
