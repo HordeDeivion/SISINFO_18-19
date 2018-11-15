@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Alumno Subir Cartel</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="estilo.css"
+
+      rel="stylesheet" type="text/css">
+
+<script>
+function abrir() {
+open('Confirmacion.html','','top=300,left=300,width=300,height=300') ;
+}
+</script>
+
+
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <p class="navbar-text"><div class="row" align="left">Logeado como Jose Manuel Romero</div></p>
+  <h1>¡Sube tu cartel!</h1>
+</div>
+<br><br>
+  <div class="container">
+      <div class ="panel panel-primary">
+        <div class = "panel-body" align="center">
+	<form id="SubirCartel" action ="upload.php" method="post" enctype="multipart/form-data">
+    <input name="userfile" type="file">
+    <br>
+    <iframe src="http://docs.google.com/gview?url=http://www.midominio.com/pdfs/elpdfquesea.pdf&embedded=true" style="width:800px; height:600px;" frameborder="0"></iframe>
+    </form>
+        </div>
+            <p>Escoja la tanda a la que pertenecerá el cartel</p>
+            <div class="m_option js_ok_ko_class_placement">
+                  <input class="m_option_input js_quizz_radio" data-msg-required="Elige una opcion" required="required" type="radio" value="36428" name="participacion" id="holaquetal" aria-required="true">
+                  <label class="m_option_label" for="holaquetal">Agua</label>
+            </div>
+                
+                  
+            <div class="m_option js_ok_ko_class_placement">
+                  <input class="m_option_input js_quizz_radio" data-msg-required="Elige uno opcion" required="required" type="radio" value="36429" name="participacion" id="holaquetal1" aria-required="true">
+                  <label class="m_option_label" for="holaquetal1">Reciclaje</label>
+            </div>
+
+            <div class="m_option js_ok_ko_class_placement">
+                  <input class="m_option_input js_quizz_radio" data-msg-required="Elige uno opcion" required="required" type="radio" value="36429" name="participacion" id="holaquetal1" aria-required="true">
+                  <label class="m_option_label" for="holaquetal1">Contaminación</label>
+            </div>
+
+            <br>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Enviar Cartel
+</button>
+
+
+
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cartel Entregado</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="glyphicon glyphicon-ok"> <h4> Tu cartel ha sido entregado correctamente</h4></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" name="guardar"  class="btn btn-primary" value="Confirmar" onclick="location.href='seleccionarCartel.html'"></input>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+            <br>
+            <br>
+      </div>
+    </div>
+    </body>
+  </html>
+
+

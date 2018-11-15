@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Alumno Subir Reto</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="estilo.css"
+      rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <p class="navbar-text"><div align="left">Logeado como Jose Manuel Romero</div></p>
+  <h1>PLANTEANOS TU RETO</h1>
+</div>
+  <div class="container">
+      <div class ="panel panel-primary">
+        <div class = "panel-body" align="center">
+	 <form id="SubirCartel" action ="upload.php" method="post" enctype="multipart/form-data">
+    <div class="input-group input-group-lg">
+      <span class="input-group-addon" id="sizing-addon1">
+      <input type="text" class="form-control" placeholder="Reto" aria-describedby="sizing-addon1">
+    </div>
+    <br>
+    <p>Escoja la tanda a la que pertenecerá el reto</p>
+            <div class="m_option js_ok_ko_class_placement">
+                  <input class="m_option_input js_quizz_radio" data-msg-required="Elige una opcion" required="required" type="radio" value="36428" name="participacion" id="holaquetal" aria-required="true">
+                  <label class="m_option_label" for="holaquetal">Tanda agua</label>
+            </div>
+                
+                  
+            <div class="m_option js_ok_ko_class_placement">
+                  <input class="m_option_input js_quizz_radio" data-msg-required="Elige uno opcion" required="required" type="radio" value="36429" name="participacion" id="holaquetal1" aria-required="true">
+                  <label class="m_option_label" for="holaquetal1">Tanda reciclaje</label>
+            </div>
+
+            <div class="m_option js_ok_ko_class_placement">
+                  <input class="m_option_input js_quizz_radio" data-msg-required="Elige uno opcion" required="required" type="radio" value="36429" name="participacion" id="holaquetal1" aria-required="true">
+                  <label class="m_option_label" for="holaquetal1">Tanda contaminación</label>
+            </div>
+            <br>
+    <input type="submit" onclick="location.href='seleccionarReto.html'"value="Enviar">
+    </form>
+        </div>
+      </div>
+    </div>
+    </body>
+  </html>

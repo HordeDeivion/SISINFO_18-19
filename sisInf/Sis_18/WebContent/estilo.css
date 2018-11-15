@@ -1,0 +1,55 @@
+
+body{
+	/*background: url(https://www.lifeofpix.com/wp-content/uploads/2018/08/lake-antholz-fall-1600x2400.jpg) no-repeat center top;*/
+    background-image: url("https://image.freepik.com/foto-gratis/rock-creek-park_1368-6231.jpg");
+	height: 100%;
+	background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#cuadro{
+	text-align: center;
+
+}
+
+
+#formulario{
+    /*margin: 0 auto;*/
+    text-align: center;
+
+}
+
+#SubirCartel{
+		margin: 0 auto;
+    text-align: center;
+}
+
+#Alta{
+	margin: 0 auto;
+    text-align: center;
+}
+
+.jumbotron {
+   /* background-image: url("https://image.freepik.com/foto-gratis/rock-creek-park_1368-6231.jpg");*/
+    background-color: grey;
+    margin-bottom: 0;`enter code here`
+    min-height: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    background-size: cover;
+    color:#FDFBFB;
+}
+#Cuestionario{
+	font-family:sans-serif;
+	transform: translate(-50%,-50%);
+	box-sizing: border-box;
+	top:50%;
+	left:50%;
+
+}
+
+/*  CAPAS CONTENEDORAS  */
+ 
+
