@@ -16,16 +16,16 @@ import ConnectDB.Alumno;
 import Funciones_usuario.Funciones_usuario;
 
 /**
- * Servlet implementation class mostrarCartelesUsuario
+ * Servlet implementation class mostrarRetoUsuario
  */
-@WebServlet("/mostrarCartelesUsuario")
-public class mostrarCartelesUsuario extends HttpServlet {
+@WebServlet("/mostrarRetoUsuario")
+public class mostrarRetoUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public mostrarCartelesUsuario() {
+    public mostrarRetoUsuario() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -50,13 +50,13 @@ public class mostrarCartelesUsuario extends HttpServlet {
 		Alumno alum=(Alumno)session.getAttribute("usuario");
 		String nombre = alum.dameNombre()+" "+alum.dameApellido1()+ " "+alum.dameApellido2();
 		request.setAttribute("nombre", nombre);
-			
-		ArrayList<Cartel> carteles = user.carteles_alum_func(alum.dameEmail());
-		int cantidad_cart= carteles.size();
-		request.setAttribute("carteles", carteles);
-		request.setAttribute("numCarteles", cantidad_cart);
 		
-		request.getRequestDispatcher("mostrarCartelesUsuario.jsp").forward(request, response);
+		ArrayList<Reto> retos = user.retos_alum_func(alum.dameEmail());
+		int cantidad_ret= retos.size();
+		
+		request.setAttribute("retos", retos);
+		request.setAttribute("numRetos", cantidad_ret);
+		request.getRequestDispatcher("mostrarRetosUsuario.jsp").forward(request, response);
 	}
 
 }

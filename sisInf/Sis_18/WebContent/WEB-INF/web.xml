@@ -32,6 +32,14 @@
     <servlet-name>mostrarCartelesUsuario</servlet-name>
     <servlet-class>log_in.mostrarCartelesUsuario</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>mostrarPreguntasUsuarios</servlet-name>
+    <servlet-class>log_in.mostrarPreguntasUsuarios</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>mostrarRetoUsuario</servlet-name>
+    <servlet-class>log_in.mostrarRetoUsuario</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>InsertUser</servlet-name>
     <url-pattern>/InsertaUser.do</url-pattern>
@@ -51,5 +59,13 @@
   <servlet-mapping>
     <servlet-name>mostrarCartelesUsuario</servlet-name>
     <url-pattern>/mostrarCartelesUsuario.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>mostrarPreguntasUsuarios</servlet-name>
+    <url-pattern>/mostrarPreguntasUsuarios.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>mostrarRetoUsuario</servlet-name>
+    <url-pattern>/mostrarRetoUsuario.do</url-pattern>
   </servlet-mapping>
 </web-app>

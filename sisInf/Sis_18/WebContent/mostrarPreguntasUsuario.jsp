@@ -9,18 +9,17 @@
     <% 
     //String Usuario="alum@unizar.es";
     Funciones_usuario user = new Funciones_usuario();
-    Alumno alum=(Alumno)session.getAttribute("usuario");
-    String Usuario=alum.dameEmail();
+    String nombre = (String)request.getAttribute("nombre");
+    Pregunta[] listaPreguntas =(Pregunta[])request.getAttribute("preguntas");
+    Respuesta[][] respuestasMatriz = (Respuesta[][])request.getAttribute("respuestas");
+    int numPreguntas = (int)request.getAttribute("numPreguntas");
     Pregunta preg;
     Respuesta resp;
     
-    ArrayList<Pregunta> preguntas =  user.preguntas_alum_func(Usuario);
-    ArrayList<Respuesta> respuestas;
-
-    int cantidad_preg= preguntas.size();
-    int cantidad_resp;
-    Iterator<Pregunta> it = preguntas.iterator();
-    Iterator<Respuesta> itRes;
+    int iPreg=0;
+    int iResp;
+    int cuenta_respuestas;
+    boolean parar;
 
     %>
     
@@ -43,33 +42,42 @@
 </head>
 <body>
 	<div class="jumbotron text-center">
-	<% String nombre = "Logeado como "+alum.dameNombre()+" "+alum.dameApellido1()+ " "+alum.dameApellido2(); %>
-	<p class="navbar-text"><div align="left"><%= nombre %></div></p>
+	<p class="navbar-text"><div align="left"><c:out value="<%= nombre %>"/></div></p>
    	 <h1>Listado preguntas</h1>
     	 <p>Revisa y/o modifica tus preguntas</p>
     <br><br>
 	</div>
 
-<c:forEach var="i" begin="1" end="<%= cantidad_preg %>">
-<% preg=it.next(); %>
+<c:forEach var="i" begin="1" end="<%= numPreguntas %>">
+<% preg=listaPreguntas[iPreg]; 
+   iResp=0;
+   cuenta_respuestas=0;
+   parar=false;
+%>
 <div class="row" align="left">
   <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" align="center">
     <div class="panel panel-primary">
       <div class="panel-heading"><h1 class="js_error_placement quizz_question required_field"><%= preg.dameTitulo() %></h1></div>
         <div class="panel-body">
-		 <%  %>
+		 <% 
+		   while(!parar){
+			   if(respuestasMatriz[iPreg][cuenta_respuestas] != null){
+				   cuenta_respuestas=cuenta_respuestas+1;
+			   }
+			   else{
+				   parar = true;
+			   }
+		   }
+		 %>
          <div class="m_options js_quizz_question">
           <ul>
-          <% respuestas = user.listado_respuestas_func(preg.dameID());
-          	 cantidad_resp= respuestas.size();
-          	 itRes=respuestas.iterator();
-          %>
-           <c:forEach var="i" begin="1" end="<%= cantidad_resp %>">
-            <% resp=itRes.next(); %>
+           <c:forEach var="i" begin="1" end="<%= cuenta_respuestas %>">
+            <% resp=respuestasMatriz[iPreg][iResp]; %>
             <div align="left" class="m_option js_ok_ko_class_placement">
               <input class="m_option_input js_quizz_radio" data-msg-required="Elige una opcion" required="required" type="radio" value="36428" name="participacion" id="holaquetal" aria-required="true">
               <label class="m_option_label" for="holaquetal"><%= resp.dameCuerpo() %></label>
             </div>
+            <% iResp=iResp+1; %>
            </c:forEach>
           
           </ul>

@@ -16,16 +16,16 @@ import ConnectDB.Alumno;
 import Funciones_usuario.Funciones_usuario;
 
 /**
- * Servlet implementation class mostrarCartelesUsuario
+ * Servlet implementation class mostrarPreguntasUsuarios
  */
-@WebServlet("/mostrarCartelesUsuario")
-public class mostrarCartelesUsuario extends HttpServlet {
+@WebServlet("/mostrarPreguntasUsuarios")
+public class mostrarPreguntasUsuarios extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public mostrarCartelesUsuario() {
+    public mostrarPreguntasUsuarios() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -50,13 +50,35 @@ public class mostrarCartelesUsuario extends HttpServlet {
 		Alumno alum=(Alumno)session.getAttribute("usuario");
 		String nombre = alum.dameNombre()+" "+alum.dameApellido1()+ " "+alum.dameApellido2();
 		request.setAttribute("nombre", nombre);
-			
-		ArrayList<Cartel> carteles = user.carteles_alum_func(alum.dameEmail());
-		int cantidad_cart= carteles.size();
-		request.setAttribute("carteles", carteles);
-		request.setAttribute("numCarteles", cantidad_cart);
 		
-		request.getRequestDispatcher("mostrarCartelesUsuario.jsp").forward(request, response);
+		ArrayList<Pregunta> preguntas =  user.preguntas_alum_func(alum.dameEmail());
+		ArrayList<Respuesta> respuestas;
+		int numPreguntas=preguntas.size();
+		request.setAttribute("numPreguntas", numPreguntas);
+		
+		Pregunta[] listaPreguntas = new Pregunta[numPreguntas];
+		Respuesta[][] respuestasMatriz = new Respuesta[numPreguntas][6];
+		int indice=0;
+		int iResp;
+		
+		Iterator<Pregunta> it = preguntas.iterator();
+		Iterator<Respuesta> itRes;
+		while (it.hasNext()){
+			listaPreguntas[indice]=it.next();
+			respuestas=user.listado_respuestas_func(listaPreguntas[indice].dameID());
+			itRes=respuestas.iterator();
+			iResp=0;
+			while (itRes.hasNext()){
+				respuestasMatriz[indice][iResp]=itRes.next();
+				iResp=iResp+1;
+			}
+			respuestasMatriz[indice][iResp]=null;
+		}
+		
+		request.setAttribute("preguntas", listaPreguntas);
+		request.setAttribute("respuestas", respuestasMatriz);
+		
+		request.getRequestDispatcher("mostrarPreguntasUsuario.jsp").forward(request, response);
 	}
 
 }

@@ -42,7 +42,7 @@
 </head>
 <body>
 	<div class="jumbotron text-center">
-	<p class="navbar-text"><div align="left"><c:out value="nombre"/></div></p>
+	<p class="navbar-text"><div align="left"><c:out value="<%= nombre %>"/></div></p>
    	 <h1>LISTADO CARTELES</h1>
 	<div align="left">
 	  <form class="navbar-form navbar-left" role="search">

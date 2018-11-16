@@ -9,13 +9,11 @@
     <% 
     //String Usuario="alum@unizar.es";
     Funciones_usuario user = new Funciones_usuario();
-    Alumno alum=(Alumno)session.getAttribute("usuario");
-    String Usuario=alum.dameEmail();
-	Reto ret;
+    String nombre = (String)request.getAttribute("nombre");
+    ArrayList<Reto> retos = (ArrayList<Reto>)request.getAttribute("retos");
+    int cantidad_ret= (int)request.getAttribute("numRetos");
     
-    ArrayList<Reto> retos = user.retos_alum_func(Usuario);
-
-    int cantidad_ret= retos.size();
+	Reto ret;
     Iterator<Reto> it = retos.iterator();
 
     %>
@@ -40,8 +38,7 @@
 </head>
 <body>
 <div class="jumbotron text-center">
-<% String nombre = "Logeado como "+alum.dameNombre()+" "+alum.dameApellido1()+ " "+alum.dameApellido2(); %>
-	<p class="navbar-text"><div align="left"><%= nombre %></div></p>
+	<p class="navbar-text"><div align="left"><c:out value="<%= nombre %>"/></div></p>
   <h1>Tus retos</h1>
   <p>Revisa y modifica tus retos</p> 
 </div>
@@ -49,9 +46,9 @@
 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" align="center">
 <c:forEach var="i" begin="1" end="<%= cantidad_ret %>">
   <div class="panel panel-primary">
-  	<% ret=it.next(); %>
+  	 <% ret=it.next(); %>
      <div class="panel-heading">RETO</div>
-     <div class="panel-body"><%= ret.dameDescripcion() %></div>
+     <div class="panel-body"><c:out value="<%= ret.dameDescripcion() %>"/></div>
      <button class= "btn btn-primary" onclick="location.href='Reto.html'">Ver comentarios</button>
      <button class= "btn btn-primary" onclick="location.href='modificarReto.html'">Modificar reto</button>
   </div>

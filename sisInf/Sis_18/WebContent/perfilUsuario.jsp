@@ -55,7 +55,7 @@
           <br>
           <img alt=" Imagen Cartel" src="http://images4.fanpop.com/image/photos/19300000/Question-mark-quizzes-19322047-300-375.jpg" width="200px" height="200px" />
           <div class="panel-body">Revisa las preguntas que has planteado</div>
-         <button class= "btn btn-primary" onclick="location.href='mostrarPreguntasUsuario.jsp'" >¡Revisar!</button>
+         <button class= "btn btn-primary" onclick="location.href='mostrarPreguntasUsuarios'" >¡Revisar!</button>
            <br> <br>
       </div>
     </div>
@@ -65,7 +65,7 @@
              <br> 
              	<img alt=" Imagen Cartel" src="https://image.shutterstock.com/image-photo/hand-changing-word-impossible-possible-450w-540510409.jpg" width="200px" height="200px" />
                  <div class="panel-body">Revisa los retos que has propuesto a los participantes</div>
-          			 <button class= "btn btn-primary" onclick="location.href='mostrarRetosUsuario.jsp'">¡Revisar!</button>
+          			 <button class= "btn btn-primary" onclick="location.href='mostrarRetoUsuario'">¡Revisar!</button>
              <br><br>
         </div>
     </div>
