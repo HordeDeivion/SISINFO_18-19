@@ -280,12 +280,13 @@ public class Funciones_usuario {
     */
    
     //Preguntas asociadas a un cartel
-    public void pregunta_asociada_cartel_func(int idCartel){
+    public Pregunta pregunta_asociada_cartel_func(int idCartel){
         System.out.println("Buscando pregunta asociada al cartel: "+idCartel);
         ConnectDB d = new ConnectDB();  
         Pregunta preg= d.pregunta_asociada_cartel(idCartel);
         String titu=preg.dameTitulo();
         System.out.println("Pregunta: "+titu);
+        return preg;
     }
     
     //Carteles asociados a un tema
@@ -323,19 +324,21 @@ public class Funciones_usuario {
     
     
     //Retos asociados a un cartel
-    public void retos_asociados_cartel_func(int idCartel){
+    public Reto retos_asociados_cartel_func(int idCartel){
         System.out.println("Buscando retos asociados al cartel: "+idCartel);
         ArrayList<Reto> lista;
         Reto ret=null;
         ConnectDB d = new ConnectDB();  
         lista= d.retos_asociados_cartel(idCartel);
         Iterator<Reto> it = lista.iterator();
-        while (it.hasNext()){
+        //while (it.hasNext()){
+        if(it.hasNext()){
             ret=it.next();
             int idReto = ret.dameID();
             String descripcion = ret.dameDescripcion();
             System.out.format("%s, %s\n", idReto, descripcion);
         }
+        return ret;
     }
     
     //Comentarios pendientes dirigidos a los alumnos de un profesor
@@ -356,29 +359,31 @@ public class Funciones_usuario {
     }
     
     //Carteles asociados a un alumno
-    public void carteles_alum_func(String emailAlum){
+    public ArrayList<Cartel> carteles_alum_func(String emailAlum){
         System.out.println("Buscando carteles del alumno: "+emailAlum);
         ArrayList<Cartel> lista;
         Cartel cart=null;
         ConnectDB d = new ConnectDB();  
         lista= d.carteles_alum(emailAlum);
-        Iterator<Cartel> it = lista.iterator();
+        return lista;
+        /*Iterator<Cartel> it = lista.iterator();
         while (it.hasNext()){
             cart=it.next();
             int idCartel = cart.dameID();
             String link = cart.dameLink();
             System.out.format("%s, %s\n", idCartel, link);
-        }     
+        }     */
     }
     
     //Devuelve el listado de alumnos asociados a un profesor y su email
-    public void alumnos_func(String email_profe){
+    public ArrayList<Alumno> alumnos_func(String email_profe){
         System.out.println("Buscando alumnos del profesor: "+email_profe);
         ArrayList<Alumno> lista;
         Alumno alum=null;
         ConnectDB d = new ConnectDB();  
         lista= d.alumnos(email_profe);
-        Iterator<Alumno> it = lista.iterator();
+        return lista;
+        /*Iterator<Alumno> it = lista.iterator();
         while (it.hasNext()){
             alum=it.next();
             String nombre=alum.dameNombre();
@@ -386,7 +391,7 @@ public class Funciones_usuario {
             String ape2=alum.dameApellido2();
             String email=alum.dameEmail();
             System.out.format("%s, %s, %s, %s\n", nombre, ape1, ape2, email);
-        }  
+        }*/  
     }
     
     /*
@@ -394,29 +399,30 @@ public class Funciones_usuario {
             1 - Ordenados por agno
             2 - Ordenados por agno y tematica
     */
-    public void carteles_ganadores_func (int peticion){
+    public ArrayList<Cartel> carteles_ganadores_func (int peticion){
         System.out.println("Buscando carteles ganadores segun peticion: "+peticion);
         ArrayList<Cartel> lista;
-        Cartel cart=null;
         ConnectDB d = new ConnectDB();  
         lista= d.carteles_gandores(peticion);
-        Iterator<Cartel> it = lista.iterator();
+        return lista;
+        /*Iterator<Cartel> it = lista.iterator();
         while (it.hasNext()){
             cart=it.next();
             int idCartel = cart.dameID();
             String link = cart.dameLink();
             System.out.format("%s, %s\n", idCartel, link);
-        } 
+        }*/ 
     }
     
-    //Devuelve el listado de todas las respuestas asociadas a un cartel
-    public void respuestas_cartel_func (int id_Cartel){
+    //Devuelve el listado de todos los comentarios asociados a un cartel
+    public ArrayList<Comentario> respuestas_cartel_func (int id_Cartel){
         System.out.println("Buscando comentarios asociados a un cartel: "+id_Cartel);
         ArrayList<Comentario> lista;
         Comentario com=null;
         ConnectDB d = new ConnectDB();  
         lista= d.respuestas_cartel(id_Cartel);
-        Iterator<Comentario> it = lista.iterator();
+        return lista;
+        /*Iterator<Comentario> it = lista.iterator();
         while (it.hasNext()){
             com=it.next();
             int id = com.dameID();
@@ -430,17 +436,18 @@ public class Funciones_usuario {
                 pendiente="F";
             }
             System.out.format("%s, %s, %s, %s\n", id, nombre, cuerpo, pendiente);
-        } 
+        }*/ 
     }
     
     // Listado de respuestas a una pregunta
-    public static void listado_respuestas_func (int id_Pregunta){
+    public static ArrayList<Respuesta> listado_respuestas_func (int id_Pregunta){
         System.out.println("Buscando respuestas asociadas a una pregunta: "+id_Pregunta);
         ArrayList<Respuesta> lista;
         Respuesta res=null;
         ConnectDB d = new ConnectDB();  
         lista= d.listado_respuestas(id_Pregunta);
-        Iterator<Respuesta> it = lista.iterator();
+        return lista;
+        /*Iterator<Respuesta> it = lista.iterator();
         while (it.hasNext()){
             res=it.next();
             int idRes=res.dameID();
@@ -452,23 +459,36 @@ public class Funciones_usuario {
             else{
                 ganador="F";
             }
-            System.out.format("%s, %s, %s\n", idRes, cuerpo, ganador);
-        } 
+            //System.out.format("%s, %s, %s\n", idRes, cuerpo, ganador);
+            
+        }*/ 
     }
     
     
     // comprobar email y contraseña de prof (para login)
-    public static boolean login_profe_func (String email_profe, String contrasena){
-        System.out.println("Buscando cuenta del profesor");
-        ConnectDB d = new ConnectDB();  
-        boolean conectado= d.comprobar_login_prof(email_profe, contrasena);
-        if(conectado){
-            System.out.println("Profesor encontrado");
-        }
-        else{
-            System.out.println("Profesor NO encontrado");
-        }
-        return conectado;
+    public static boolean login_profe_func (String email_profe, String contrasena)throws Exception{
+    	 System.out.println("Buscando cuenta del profesor");
+         ConnectDB d = new ConnectDB(); 
+         try {
+             boolean conectado= d.comprobar_login_prof(email_profe, contrasena);
+             if(conectado){
+                 System.out.println("Profesor encontrado");
+             }
+             else{
+                 System.out.println("Profesor NO encontrado");
+             }
+             return conectado;
+         }catch(Exception e) {
+         	
+         	if(e.getMessage()== "Error contrasena") {
+         		
+         		throw new Exception("Error contrasena");
+         	}
+         	if(e.getMessage()== "Error nombre") {
+         		throw new Exception("Error usuario");
+         	}
+         }
+         return false;
     }
     
     
@@ -500,38 +520,40 @@ public class Funciones_usuario {
     }
     
     //Preguntas asociadas a un alumno
-    public static void preguntas_alum_func (String emailAlum){
+    public static ArrayList<Pregunta> preguntas_alum_func (String emailAlum){
         System.out.println("Buscando preguntas asociadas al alumno: "+emailAlum);
         ArrayList<Pregunta> lista;
         Pregunta preg=null;
         ConnectDB d = new ConnectDB();  
         lista= d.preguntas_alum(emailAlum);
-        Iterator<Pregunta> it = lista.iterator();
+        return lista;
+        /*Iterator<Pregunta> it = lista.iterator();
         while (it.hasNext()){
             preg=it.next();
             int id=preg.dameID();
             int idCartel = preg.dameIDCartel();
             String titulo=preg.dameTitulo();
             System.out.format("%s, %s, %s\n", id, idCartel, titulo);
-        } 
+        } */
     }
     
     
     //Retos asociados a un alumno
-    public static void retos_alum_func (String emailAlum){
+    public static ArrayList<Reto> retos_alum_func (String emailAlum){
         System.out.println("Buscando retos asociados al alumno: "+emailAlum);
         ArrayList<Reto> lista;
         Reto ret=null;
         ConnectDB d = new ConnectDB();  
         lista= d.retos_alum(emailAlum);
-        Iterator<Reto> it = lista.iterator();
+        return lista;
+        /*Iterator<Reto> it = lista.iterator();
         while (it.hasNext()){
             ret=it.next();
             int idReto = ret.dameID();
             int idCartel=ret.dameIDCartel();
             String descripcion = ret.dameDescripcion();
             System.out.format("%s, %s, %s\n", idReto, idCartel, descripcion);
-        }
+        }*/
     }
     
     
@@ -561,34 +583,109 @@ public class Funciones_usuario {
     
     
     //Temas de este año
-    public static void temas_anyoactual_func (){
+    public static ArrayList<String> temas_anyoactual_func (){
         System.out.println("Buscando temas de este año");
+        ArrayList<String> temas = new ArrayList<>();;
         ConnectDB d = new ConnectDB();  
         try{
             ResultSet rs= d.temas_anyoactual();
             while (rs.next()){
                     String tema = rs.getString("tema");
                     System.out.format("%s\n", tema);
+                    temas.add(tema);
             }
         } catch(SQLException ex){
              System.out.println(ex.getMessage());
         }
+        return temas;
     }
     
-    //Listado de carteles de este año
-    public static void ganadorestema_anyoactual_func (){
+    //Listado de carteles ganadores de este año
+    public static ArrayList<Cartel> ganadorestema_anyoactual_func (){
         System.out.println("Buscando carteles ganadores por tema de este año");
         ArrayList<Cartel> lista;
         Cartel cart=null;
         ConnectDB d = new ConnectDB();  
         lista= d.ganadorestema_anyoactual();
-        Iterator<Cartel> it = lista.iterator();
+        return lista;
+        /*Iterator<Cartel> it = lista.iterator();
         while (it.hasNext()){
             cart=it.next();
             int idCartel=cart.dameID();
             String link=cart.dameLink();
             String tema=cart.dameTema();
             System.out.format("%s, %s, %s\n",idCartel, tema, link);
-        }
+        }*/
     }
+    
+    //Cartel ganador por tema de este año
+    public static Cartel ganadortema_anyoactual_func (String tema){
+        Cartel cart=null;
+        ConnectDB d = new ConnectDB();  
+        cart= d.ganadortema_anyoactual(tema);
+        return cart;
+    }
+    
+  //Cartel segun el id
+    public static Cartel cartel_id_func (int idCartel){
+        Cartel cart=null;
+        ConnectDB d = new ConnectDB();  
+        cart= d.cartel_id(idCartel);
+        return cart;
+    }
+    
+    //Alumno segun el email
+    public static Alumno alumno_id_func (String email){
+        Alumno alum=null;
+        ConnectDB d = new ConnectDB();  
+        alum= d.alumno_id(email);
+        return alum;
+    }
+    
+  //Profesor segun el email
+    public static Profesor profesor_id_func (String email){
+    	Profesor profe=null;
+        ConnectDB d = new ConnectDB();  
+        profe= d.profe_id(email);
+        return profe;
+    }
+    
+    /*
+     * 
+     * FUNCION NUEVA
+     */
+    
+    public static boolean Buscar_profe (String email_profe)throws Exception{
+   	 System.out.println("Buscando cuenta del profesor");
+        ConnectDB d = new ConnectDB(); 
+        try {
+            boolean conectado= d.comprobar_prof(email_profe);
+        }catch(Exception e) {
+        	
+        	if(e.getMessage()== "Error nombre profesor") {
+        		throw new Exception("Error nombre profesor");
+        	}
+        }
+        return false;
+   }
+    
+    /*
+     * 
+     * FUNCION NUEVA
+     */
+    
+    public static boolean Buscar_alum (String email_alum)throws Exception{
+   	 System.out.println("Buscando cuenta del profesor");
+        ConnectDB d = new ConnectDB(); 
+        try {
+            boolean conectado= d.comprobar_alum(email_alum);
+        }catch(Exception e) {
+        	
+        	if(e.getMessage() == "Error nombre alumno") {
+        		throw new Exception("Error nombre alumno");
+        	}
+        }
+        return false;
+   }
+    
 }

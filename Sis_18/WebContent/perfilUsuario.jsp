@@ -1,4 +1,16 @@
-<html lang="es">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    
+    <%@ page import= "Funciones_usuario.*" %>
+    <%@ page import= "ConnectDB.*" %>
+    <%@ page import= "java.io.IOException" %>
+    <%@ page import= "java.util.*" %>
+    
+    <% String nombre = "Logeado como "+(String)request.getAttribute("nombre");%>
+    
+    
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
 <title> Perfil Usuario </title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -17,12 +29,13 @@
 <body>
 <div class="jumbotron text-center">
   <div align="right">
-      <button class= "btn btn-warning" onclick="location.href='menuPrincipal.html'" >Desloguear</button>
+      <button class= "btn btn-warning" onclick="location.href='menuPrincipal.jsp'" >Desloguear</button>
       <button class= "btn btn-warning" onclick="location.href='dardebaja.html'" >Darse de baja</button>
-      <button class= "btn btn-warning" onclick="location.href='modificarPerfil.html'" >Modificar Perfil</button>
+      <button class= "btn btn-warning" onclick="location.href='ModificarPerfilAlumno'" >Modificar Perfil</button>
   </div>
+	<p class="navbar-text"><div align="left"><c:set> ${nombre} </c:set></div></p>
   <h1>BIENVENIDO PARTICIPANTE</h1>
-  <p>Â¿Que desea hacer?</p> 
+  <p>¿Que desea hacer?</p> 
 </div>
 <br>
 <div class="row">
@@ -32,7 +45,7 @@
           <br> 
  			 <img alt=" Imagen Cartel" src="https://cdn.pixabay.com/photo/2017/10/15/14/14/poster-mockup-2853837_960_720.jpg" width="200px" height="200px" />
           <div class="panel-body">Revisa los carteles con los que has participado</div>
-           <button align="center" class= "btn btn-primary" onclick="location.href='seleccionarCartel.html'">¡Revisar!</button>
+           <button align="center" class= "btn btn-primary" onclick="location.href='mostrarCartelesUsuario'">¡Revisar!</button>
            <br><br>
         </div>
     </div>
@@ -42,7 +55,7 @@
           <br>
           <img alt=" Imagen Cartel" src="http://images4.fanpop.com/image/photos/19300000/Question-mark-quizzes-19322047-300-375.jpg" width="200px" height="200px" />
           <div class="panel-body">Revisa las preguntas que has planteado</div>
-         <button class= "btn btn-primary" onclick="location.href='seleccionarPregunta.html'" >¡Revisar!</button>
+         <button class= "btn btn-primary" onclick="location.href='mostrarPreguntasUsuarios'" >¡Revisar!</button>
            <br> <br>
       </div>
     </div>
@@ -52,7 +65,17 @@
              <br> 
              	<img alt=" Imagen Cartel" src="https://image.shutterstock.com/image-photo/hand-changing-word-impossible-possible-450w-540510409.jpg" width="200px" height="200px" />
                  <div class="panel-body">Revisa los retos que has propuesto a los participantes</div>
-          			 <button class= "btn btn-primary" onclick="location.href='seleccionarReto.html'">¡Revisar!</button>
+          			 <button class= "btn btn-primary" onclick="location.href='mostrarRetoUsuario'">¡Revisar!</button>
+             <br><br>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" align="center">
+        <div class="panel panel-primary">
+            <div class="panel-heading">SUBIR CARTEL</div>        
+             <br> 
+             	<img alt=" Imagen Cartel" src="https://image.shutterstock.com/image-photo/hand-changing-word-impossible-possible-450w-540510409.jpg" width="200px" height="200px" />
+                 <div class="panel-body">Sube un cartel</div>
+          			 <button class= "btn btn-primary" onclick="location.href='sacarSubirCartel'">¡Revisar!</button>
              <br><br>
         </div>
     </div>

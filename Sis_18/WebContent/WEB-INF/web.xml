@@ -12,16 +12,92 @@
     <servlet-name>InsertUser</servlet-name>
     <servlet-class>log_in.SignIn</servlet-class>
   </servlet>
-   <servlet>
+  <servlet>
     <servlet-name>logIn</servlet-name>
     <servlet-class>log_in.logIn</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>insertarCartel</servlet-name>
+    <servlet-class>log_in.insertarCartel</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>perfilUsuario</servlet-name>
+    <servlet-class>log_in.perfilUsuario</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>mostrarCartel</servlet-name>
+    <servlet-class>log_in.mostrarCartel</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>mostrarCartelesUsuario</servlet-name>
+    <servlet-class>log_in.mostrarCartelesUsuario</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>mostrarPreguntasUsuarios</servlet-name>
+    <servlet-class>log_in.mostrarPreguntasUsuarios</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>mostrarRetoUsuario</servlet-name>
+    <servlet-class>log_in.mostrarRetoUsuario</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>MenuPrincipalUsuario</servlet-name>
+    <servlet-class>log_in.MenuPrincipalUsuario</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>MenuPrincipalProfesor</servlet-name>
+    <servlet-class>log_in.MenuPrincipalProfesor</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>VerCarteles</servlet-name>
+    <servlet-class>log_in.VerCarteles</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ModificarPerfilAlumno</servlet-name>
+    <servlet-class>log_in.ModificarPerfilAlumno</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>InsertUser</servlet-name>
     <url-pattern>/InsertaUser.do</url-pattern>
   </servlet-mapping>
-   <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>logIn</servlet-name>
     <url-pattern>/logIn.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>perfilUsuario</servlet-name>
+    <url-pattern>/perfilUsuario.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>mostrarCartel</servlet-name>
+    <url-pattern>/mostrarCartel.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>mostrarCartelesUsuario</servlet-name>
+    <url-pattern>/mostrarCartelesUsuario.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>mostrarPreguntasUsuarios</servlet-name>
+    <url-pattern>/mostrarPreguntasUsuarios.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>mostrarRetoUsuario</servlet-name>
+    <url-pattern>/mostrarRetoUsuario.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>MenuPrincipalUsuario</servlet-name>
+    <url-pattern>/MenuPrincipalUsuario.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>MenuPrincipalProfesor</servlet-name>
+    <url-pattern>/MenuPrincipalProfesor.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>VerCarteles</servlet-name>
+    <url-pattern>/VerCarteles.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ModificarPerfilAlumno</servlet-name>
+    <url-pattern>/ModificarPerfilAlumno.do</url-pattern>
   </servlet-mapping>
 </web-app>

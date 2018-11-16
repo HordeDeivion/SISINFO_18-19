@@ -31,8 +31,8 @@ body{
 }
 
 .jumbotron {
-    background-image: url("https://image.freepik.com/foto-gratis/rock-creek-park_1368-6231.jpg");
-    background-color: #17234E;
+   /* background-image: url("https://image.freepik.com/foto-gratis/rock-creek-park_1368-6231.jpg");*/
+    background-color: grey;
     margin-bottom: 0;`enter code here`
     min-height: 50%;
     background-repeat: no-repeat;

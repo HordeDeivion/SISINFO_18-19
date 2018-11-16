@@ -1,6 +1,8 @@
 package log_in;
 
 import Funciones_usuario.*;
+import ConnectDB.*;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -42,21 +44,24 @@ public class logIn extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("He llegado");
-	//	List<String> errors = new ArrayList<String>(); 
+		//	List<String> errors = new ArrayList<String>(); 
 		Map<String,String> errors = new HashMap<String,String>();
+		
 		String email = request.getParameter("email");
 		System.out.println(email);
 		String pass = request.getParameter("pass");
 		String op = request.getParameter("participacion");
+		System.out.println("Codigo:" +op);
 		if(errors.isEmpty()){
-			if (op != "36428") {
+			if (op.equals("36428") ) {
 				
 				System.out.println("Soy alumno");
 				try {
 					Funciones_usuario n = new Funciones_usuario();
 					boolean e = n.login_alumno_func(email,pass);
+					Alumno alum = n.alumno_id_func(email);
 					HttpSession s = request.getSession();
-					s.setAttribute("nombre", email);
+					s.setAttribute("usuario", alum);
 					response.sendRedirect("perfilUsuario.jsp");
 				}catch(Exception e) {
 					if (e.getMessage()=="Error usuario") {
@@ -73,15 +78,16 @@ public class logIn extends HttpServlet {
 				}
 			}
 			else {
+				System.out.println("Soy profesor");
 				try {
 					Funciones_usuario n = new Funciones_usuario();
 					boolean e = n.login_profe_func(email,pass);
+					Profesor profe = n.profesor_id_func(email);
 					HttpSession s = request.getSession();
-					s.setAttribute("nombre", email);
+					s.setAttribute("usuario", profe);
 					response.sendRedirect("Profesor.jsp");
 				}catch(Exception e) {
 					if (e.getMessage()=="Error usuario") {
-						System.out.println("He llegado");
 						errors.put("email","Email erroneo");
 						
 					}else if(e.getMessage()=="Error contrasena"){
@@ -89,19 +95,11 @@ public class logIn extends HttpServlet {
 	
 					}
 					request.setAttribute("errores",errors);
-					RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
 					dispatcher.forward(request,response);
 				}
 			}
+			
 		}
-		else {
-			request.setAttribute("errores",errors);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-			dispatcher.forward(request,response);
-		}
-	
-		
-		
 	}
-
 }

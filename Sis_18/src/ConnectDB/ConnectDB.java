@@ -18,7 +18,7 @@ public class ConnectDB {
     static String Nombre_DB= "sis_18";
     static String username = "root";
     static String password = "1234";
-    static String url = "jdbc:mysql://localhost:3306/"+Nombre_DB+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true";
+    static String url = "jdbc:mysql://localhost:8090/"+Nombre_DB+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true&integratedSecurity=true";
 	static final String S_JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 
     /**
@@ -31,6 +31,29 @@ public class ConnectDB {
     
     */
     
+    /*public static void main(String[] args) {
+    	String email = "buenos@unizar.es";
+		String pass = "eae";
+		String nombre = "hola";
+		String apellidos = "bueno dias";
+		String asociado = "uno@unizar.es";
+		 try{
+             MessageDigest md= MessageDigest.getInstance("SHA-512");
+             md.update(pass.getBytes());
+             byte[] mb = md.digest();
+             Alumno alum=new Alumno(nombre, apellidos, apellidos, email, asociado);
+             ConnectDB d = new ConnectDB();
+             int puede= d.insert_alumno(alum,mb);
+             if(puede == 0){
+                 System.out.println("No ha podido insertar alumno");
+             }
+        } catch (Exception ex) {
+     	   //throw new Exception ("Error alumno");
+        	System.out.println("error");
+         }
+		
+		
+    }*/
     
       /*
     nombre: Nombre profesor
@@ -83,6 +106,7 @@ public class ConnectDB {
     em: email del profesor
     asociado = email del profe asociado
     */
+    //public static int insert_alumno(Alumno alum, byte[] contra)throws Exception{
     public static int insert_alumno(Alumno alum, byte[] contra)throws Exception{
         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
         try{
@@ -91,13 +115,21 @@ public class ConnectDB {
             String a2=alum.dameApellido2();
             String em=alum.dameEmail();
             String asociado=alum.dameEmailprofe();
-            Connection conection = DriverManager.getConnection(url, username, password);
+            try {
+           	 Class.forName(S_JDBC_DRIVER);
+           }catch(Exception e) {}
+            System.out.println("He llegado2");
+            try{
+            	Connection conection = DriverManager.getConnection(url, username, password);
+            
+            System.out.println("He llegado CONECTADO");
             if (nom.length() == 0){
                 System.out.println("Inserte un nombre valido");
                 Puede = -1;
             }
             else{
                 // Se intenta insertar un profesor
+            	System.out.println("He llegado3");
                 PreparedStatement al = conection.prepareStatement("INSERT INTO alumno(nombre,apellido1,apellido2,email,contrasena,emailprofe) VALUES("
                                                +"'"+nom+"',"+   "'"+a1+"'," +   "'"+a2+"',"+  
                                               "'"+em+"',"+   "'"+contra+"',"  +   "'"+asociado+"');");
@@ -105,12 +137,15 @@ public class ConnectDB {
                 // Puede == 1 si y solo si ha podido insertar
                 Puede = al.executeUpdate();;
             }
-              
+            } catch(SQLException e){
+            	System.out.println("NO CONECTA");
+            	e.printStackTrace();
+            }
+            
         } catch(Exception ex){
         	throw new Exception ("Error alumno");
-
-
         }
+        
         return Puede;
     }
        /*
@@ -132,6 +167,9 @@ public class ConnectDB {
                 int agno=cart.dameAgno();
                 String tema=cart.dameTema();
                 String link=cart.dameLink();
+                try {
+               	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 // Se mira si es un link valido
                 if (link.length() == 0){
@@ -166,6 +204,9 @@ public class ConnectDB {
             int id=pregun.dameID();
             int idC=pregun.dameIDCartel();
             String titulo=pregun.dameTitulo();
+            try {
+           	 Class.forName(S_JDBC_DRIVER);
+           }catch(Exception e) {}
             Connection conection = DriverManager.getConnection(url, username, password);
             // Se mira si es un link valido
             if (titulo.length() == 0){
@@ -214,7 +255,9 @@ public class ConnectDB {
         }
         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
         try{
-                //Class.forName("com.mysql.jdbc.Driver");
+        	try {
+           	 Class.forName(S_JDBC_DRIVER);
+           }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 // Se mira si es un link valido
                 if (cuerpo.length() == 0){
@@ -264,6 +307,9 @@ public class ConnectDB {
             else{
                 ganador="F";
             }
+            try {
+           	 Class.forName(S_JDBC_DRIVER);
+            }catch(Exception e) {}
             Connection conection = DriverManager.getConnection(url, username, password);
             // Se mira si es un link valido
             if (cuerpo.length() == 0){
@@ -299,7 +345,9 @@ public class ConnectDB {
         String descripcion=ret.dameDescripcion();
         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
         try{
-                //Class.forName("com.mysql.jdbc.Driver");
+        	   try {
+              	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 // Se mira si es un link valido
                 if (descripcion.length() == 0){
@@ -334,7 +382,9 @@ public class ConnectDB {
         
         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
         try{
-                //Class.forName("com.mysql.jdbc.Driver");
+        	   try {
+              	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 // Se mira si es un link valido
                 if (email.length() == 0){
@@ -365,7 +415,9 @@ public class ConnectDB {
         
         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
         try{
-                //Class.forName("com.mysql.jdbc.Driver");
+        	   try {
+              	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 // Se mira si es un link valido
                 if (email.length() == 0){
@@ -396,7 +448,9 @@ public class ConnectDB {
         
         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
         try{
-                //Class.forName("com.mysql.jdbc.Driver");
+        	   try {
+              	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 // Se intenta eliminar el cartel
                 PreparedStatement al = conection.prepareStatement("DELETE FROM cartel WHERE emailA = "+
@@ -423,7 +477,9 @@ public class ConnectDB {
         
         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
         try{
-                //Class.forName("com.mysql.jdbc.Driver");
+        	   try {
+              	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 // Se mira si es un link valido
                 if (idC <= 0){
@@ -456,7 +512,9 @@ public class ConnectDB {
         
         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
         try{
-                //Class.forName("com.mysql.jdbc.Driver");
+        	   try {
+              	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 // Se mira si es un link valido
                 if (idP <= 0){
@@ -487,7 +545,9 @@ public class ConnectDB {
         
         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
         try{
-                //Class.forName("com.mysql.jdbc.Driver");
+        	   try {
+              	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 // Se mira si es un link valido
                 if (idR <= 0){
@@ -521,7 +581,9 @@ public class ConnectDB {
         
         int Puede = 0;         // 1 si la inserccion ha sido un exito 0 en caso contrario
         try{
-                //Class.forName("com.mysql.jdbc.Driver");
+        	   try {
+              	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 // Se mira si es un link valido
                 if (idR <= 0){
@@ -558,6 +620,9 @@ public class ConnectDB {
         boolean cambiadas=false;
         try{
                 String comando="UPDATE profesor SET";
+                try {
+                  	 Class.forName(S_JDBC_DRIVER);
+                   }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 if (nom.length() > 0){
                     comando=comando+ " nombre = '"+nom+"',";
@@ -626,6 +691,9 @@ public class ConnectDB {
         boolean cambiadas=false;
         try{
                 String comando="UPDATE alumno SET";
+                try {
+                  	 Class.forName(S_JDBC_DRIVER);
+                }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 if (nom.length() > 0){
                     comando=comando+ " nombre = '"+nom+"',";
@@ -686,6 +754,9 @@ public class ConnectDB {
         boolean cambiadas=false;
         try{
                 String comando="UPDATE pregunta SET";
+                try {
+                 	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 if (titulo.length() > 0){
                     comando=comando+ " titulo = '"+titulo+"'";
@@ -737,6 +808,9 @@ public class ConnectDB {
         boolean aCambiar=false;
         try{
                 String comando="UPDATE respuesta SET";
+                try {
+                 	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 
                 if (veces > 0){
@@ -798,6 +872,9 @@ public class ConnectDB {
         boolean cambiadas=false;
         try{
                 String comando="UPDATE reto SET";
+                try {
+                 	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 if (descripcion.length() > 0){
                     comando=comando+ " descripcion = '"+descripcion+"'";
@@ -839,6 +916,10 @@ public class ConnectDB {
                 String comando="SELECT p.id, p.titulo\n" +
                                 "FROM cartel c left join pregunta p on c.id=p.idCartel\n" +
                                 "WHERE c.id="+idCartel+";";
+                
+                try {
+               	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 PreparedStatement al = conection.prepareStatement(comando);
                 rs =al.executeQuery();
@@ -864,6 +945,9 @@ public class ConnectDB {
                 String comando="SELECT *\n" +
                                "FROM cartel c\n" +
                                "WHERE tema='" + tema + "';";
+                try {
+                 	 Class.forName(S_JDBC_DRIVER);
+                }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 
                 PreparedStatement al = conection.prepareStatement(comando);
@@ -895,6 +979,9 @@ public class ConnectDB {
                 String comando="SELECT *\n" +
                                 "FROM cartel c\n" +
                                 "WHERE c.agno=" + anyo + " AND c.ganador=1;";
+                try {
+                	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 
                 PreparedStatement al = conection.prepareStatement(comando);
@@ -926,6 +1013,10 @@ public class ConnectDB {
                 String comando="SELECT r.id, r.descripcion\n" +
                                 "FROM cartel c left join reto r on c.id=r.idCartel\n" +
                                 "WHERE c.id=" + idCartel + ";";
+                
+                try {
+               	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
        
                 PreparedStatement al = conection.prepareStatement(comando);
@@ -954,6 +1045,9 @@ public class ConnectDB {
                 String comando="SELECT com.id, com.nombre, com.cuerpo, com.idCartel\n" +
 "	FROM ((profesor prof left join alumno a on prof.email = a.emailprofe) left join cartel c on a.email=c.emailA) left join comentario com on c.id=com.idCartel\n" +
 "	WHERE prof.email='" + emailProf + "' AND com.pendiente='T';";
+                try {
+                	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 
                 System.out.println("Buscando comentarios pendientes del profesor: "+emailProf);
@@ -985,6 +1079,9 @@ public class ConnectDB {
                 String comando="SELECT c.id, c.link, c.ganador, c.agno, c.tema\n" +
                                 "FROM alumno a left join cartel c on a.email=c.emailA\n" +
                                 "WHERE c.emailA='"+ emailAlum+ "';";
+                try {
+                	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 
                 System.out.println("Buscando carteles del alumno: "+emailAlum);
@@ -1016,15 +1113,20 @@ public class ConnectDB {
         ArrayList<Alumno> lista=new ArrayList<>();
         Alumno alum=null;
         try{ 
+        	try {
+            	 Class.forName(S_JDBC_DRIVER);
+           }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 Statement pet = conection.createStatement(); 
-                String query=" select A1.nombre,A2.apellido1,A1.apellido2,A1.email from ( (select * from profesor  where profesor.email = "+email_profe +") AS A2 LEFT JOIN  alumno A1 ON A1.emailprofe = A2.email) ;";
+                String query=" SELECT * \n" +
+                				"FROM alumno a \n" +
+                				"WHERE a.emailprofe='" + email_profe + "';";
                 rs=pet.executeQuery (query);
                 while (rs.next()){
-                    String nombre = rs.getString("ganador");
-                    String apellido1 = rs.getString("ganador");
-                    String apellido2 = rs.getString("ganador");
-                    String email = rs.getString("ganador");
+                    String nombre = rs.getString("nombre");
+                    String apellido1 = rs.getString("apellido1");
+                    String apellido2 = rs.getString("apellido2");
+                    String email = rs.getString("email");
                     alum=new Alumno(nombre,apellido1,apellido2,email,email_profe);
                     lista.add(alum);
                 }
@@ -1047,6 +1149,9 @@ public class ConnectDB {
          Cartel cart=null;
          if ( peticion == 1 || peticion==2){
             try{
+            	   try {
+                	 Class.forName(S_JDBC_DRIVER);
+            	   }catch(Exception e) {}
                     Connection conection = DriverManager.getConnection(url, username, password);
                     Statement pet = conection.createStatement(); 
                     String query;
@@ -1090,6 +1195,9 @@ public class ConnectDB {
         Comentario com=null;
         ResultSet rs=null;
         try{
+        	try {
+            	 Class.forName(S_JDBC_DRIVER);
+           }catch(Exception e) {}
             Connection conection = DriverManager.getConnection(url, username, password);
             Statement pet = conection.createStatement(); 
             String query = "SELECT com.id, com.nombre, com.cuerpo, com.pendiente\n" +
@@ -1120,6 +1228,9 @@ public class ConnectDB {
         Respuesta res=null;
         ResultSet rs=null;
         try{
+        	try {
+            	 Class.forName(S_JDBC_DRIVER);
+           }catch(Exception e) {}
             Connection conection = DriverManager.getConnection(url, username, password);
             Statement pet = conection.createStatement(); 
             String query = "SELECT r.id, r.idC, r.cuerpo, r.veces, r.ganador\n" +
@@ -1145,94 +1256,116 @@ public class ConnectDB {
     
     
     /*
-        comprobar email y contraseña de prof (para login)
-    */
-    public boolean comprobar_login_prof (String email_profe, String contrasena) {
-         
-         ResultSet rs=null;
-         boolean puede=true;
-        
-            try{
-                try{
-                    MessageDigest md= MessageDigest.getInstance("SHA-512");
-                    md.update(contrasena.getBytes());
-                    byte[] mb = md.digest();
-                    Connection conection = DriverManager.getConnection(url, username, password);
-                    Statement pet = conection.createStatement(); 
-                    String query = "SELECT *\n" +
-                                    "FROM profesor p\n" +
-                                    "WHERE p.email='"+ email_profe +"' AND p.contrasena='" + md + "';" ;
+    comprobar email y contraseña de prof (para login)
+*/
+public boolean comprobar_login_prof (String email_profe, String contrasena) throws Exception {
+       ResultSet rs=null;
+       boolean puede=true;
+      
+          try{
+              try{
+                  MessageDigest md= MessageDigest.getInstance("SHA-512");
+                  md.update(contrasena.getBytes());
+                  byte[] mb = md.digest();
+                  try {
+                     Class.forName(S_JDBC_DRIVER);
+                 }catch(Exception e) {}
+                  Connection conection = DriverManager.getConnection(url, username, password);
+                  Statement pet = conection.createStatement(); 
+                  String query = "SELECT *\n" +
+                                  "FROM alumno a\n" +
+                                  "WHERE a.profesor='"+ email_profe+"';" ; //+"' AND a.contrasena='" + md + "';" ;
 
-                    rs=pet.executeQuery (query);
-                    if(!rs.next()){
-                        puede=false;
-                    }
-                    return puede;
+                  rs=pet.executeQuery (query);
+                  if(rs.next()){
+                      puede=false;
+                        query = "SELECT *\n" +
+                              "FROM profesor a\n" +
+                              "WHERE a.email='"+ email_profe+"' AND a.contrasena='" + md + "';" ;
+                        rs = pet.executeQuery(query);
+                         if(!rs.next()){
+                            System.out.println("Ha habido un error en la contraseña del profesor");
 
-                } catch(NoSuchAlgorithmException e){
-                    System.out.println("No se ha podido cifrar la contraseña");
-                    return false;
-                }
-            } catch(SQLException ex){
-                 System.out.println(ex.getMessage());
-                 return false;
-            }     
-    }
+                             throw new Exception ("Error contrasena");
+                         }
+                         else {
+                             System.out.println("encontrado");
+                             return true;
+                         }
+                        
+
+                  }
+                  else {
+                    System.out.println("Ha habido un eror en el nombre");
+                        throw new Exception ("Error nombre");
+                        //throw new Exception ("Error contrasena");
+                  }
+              } catch(NoSuchAlgorithmException e){
+                  System.out.println("No se ha podido cifrar la contraseña");
+                  return false;
+              }
+          } catch(SQLException ex){
+               System.out.println(ex.getMessage());
+               return false;
+          }     
+}
+
+    /*
+    comprobar email y contraseña de alumno (para login)
+*/
+public boolean comprobar_login_alumno (String email_alumno, String contrasena) throws Exception{
+     
+     ResultSet rs=null;
+     boolean puede=true;
     
-        /*
-        comprobar email y contraseña de alumno (para login)
-    */
-    public boolean comprobar_login_alumno (String email_alumno, String contrasena) throws Exception{
-         
-         ResultSet rs=null;
-         boolean puede=true;
-        
+        try{
             try{
-                try{
-                    MessageDigest md= MessageDigest.getInstance("SHA-512");
-                    md.update(contrasena.getBytes());
-                    byte[] mb = md.digest();
-                    try {
-                   	 Class.forName(S_JDBC_DRIVER);
-                   }catch(Exception e) {}
-                    Connection conection = DriverManager.getConnection(url, username, password);
-                    Statement pet = conection.createStatement(); 
-                    String query = "SELECT *\n" +
-                                    "FROM alumno a\n" +
-                                    "WHERE a.email='"+ email_alumno+"';" ; //+"' AND a.contrasena='" + md + "';" ;
-
-                    rs=pet.executeQuery (query);
-                    if(rs.next()){
-                        puede=false;
-                        	query = "SELECT *\n" +
+                MessageDigest md= MessageDigest.getInstance("SHA-512");
+                md.update(contrasena.getBytes());
+                byte[] mb = md.digest();
+                String str = new String(mb, "UTF-8");
+                try {
+                 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
+                Connection conection = DriverManager.getConnection(url, username, password);
+                Statement pet = conection.createStatement(); 
+                String query = "SELECT *\n" +
                                 "FROM alumno a\n" +
-                                "WHERE a.email='"+ email_alumno+"' AND a.contrasena='" + md + "';" ;
-                        	rs = pet.executeQuery(query);
-                        	 if(!rs.next()){
-                             	System.out.println("Ha habido un eror en la contra");
+                                "WHERE a.email='"+ email_alumno+"';" ; //+"' AND a.contrasena='" + md + "';" ;
+                System.out.format("%s------------------------\n",email_alumno);
+                rs=pet.executeQuery (query);
+                if(rs.next()){
+                    puede=false;
+                        query = "SELECT *\n" +
+                            "FROM alumno a\n" +
+                            "WHERE a.email='"+ email_alumno+"' AND a.contrasena='" + md + "';" ;
+                        System.out.format("%s------------------------\n",str);
+                        rs = pet.executeQuery(query);
+                         if(!rs.next()){
+                            System.out.println("Ha habido un error en la contra");
 
-                        		 throw new Exception ("Error contrasena");
-                        	 }
-                        	 else {
-                        		 System.out.println("encontrado");
-                        		 return true;
-                        	 }
-                        	
+                             throw new Exception ("Error contrasena");
+                         }
+                         else {
+                             System.out.println("encontrado");
+                             return true;
+                         }
+                        
 
-                    }
-                    else {
-                    	System.out.println("Ha habido un eror en el nombre");
-               		 	throw new Exception ("Error nombre");
-                    }
-                } catch(NoSuchAlgorithmException e){
-                    System.out.println("No se ha podido cifrar la contraseña");
-                    return false;
                 }
-            } catch(SQLException ex){
-                 System.out.println(ex.getMessage());
-                 return false;
-            }     
-    }
+                else {
+                    System.out.println("Ha habido un error en el nombre");
+                    throw new Exception ("Error nombre");
+                }
+            } catch(NoSuchAlgorithmException e){
+                System.out.println("No se ha podido cifrar la contraseña");
+                return false;
+            }
+        } catch(SQLException ex){
+             System.out.println(ex.getMessage());
+             return false;
+        }     
+}
     
     
     //Preguntas asociadas a un alumno
@@ -1244,6 +1377,9 @@ public class ConnectDB {
             String comando="SELECT p.id, p.titulo, p.idCartel\n" +
                                 "FROM (alumno a left join cartel c on a.email=c.emailA) left join pregunta p on c.id=p.idCartel\n" +
                                 "WHERE c.emailA='" + emailAlum + "';";
+            try {
+            	 Class.forName(S_JDBC_DRIVER);
+           }catch(Exception e) {}
             Connection conection = DriverManager.getConnection(url, username, password);
             PreparedStatement al = conection.prepareStatement(comando);
             rs =al.executeQuery();
@@ -1271,6 +1407,9 @@ public class ConnectDB {
             String comando="SELECT r.id, r.descripcion, r.idCartel\n" +
                                 "FROM (alumno a left join cartel c on a.email=c.emailA) left join reto r on c.id=r.idCartel\n" +
                                 "WHERE c.emailA='"+emailAlum+"';";
+            try {
+            	 Class.forName(S_JDBC_DRIVER);
+           }catch(Exception e) {}
             Connection conection = DriverManager.getConnection(url, username, password);
             PreparedStatement al = conection.prepareStatement(comando);
             rs =al.executeQuery();
@@ -1297,6 +1436,9 @@ public class ConnectDB {
                 String comando="SELECT DISTINCT count(*) as cuenta\n" +
                                 "FROM ((profesor p left join alumno a on p.email=a.emailprofe) left join cartel c on a.email=c.emailA) left join comentario com on c.id=com.idCartel\n" +
                                 "WHERE p.email='"+emailProf+"' AND com.pendiente='T';";
+                try {
+                	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 PreparedStatement al = conection.prepareStatement(comando);
                 rs =al.executeQuery();
@@ -1323,6 +1465,9 @@ public class ConnectDB {
         Calendar cal= Calendar.getInstance();
         int year= cal.get(Calendar.YEAR);
         try{
+        	try {
+            	 Class.forName(S_JDBC_DRIVER);
+           }catch(Exception e) {}
             Connection conection = DriverManager.getConnection(url, username, password);
             Statement pet = conection.createStatement(); 
             String query = "SELECT *\n" +
@@ -1356,6 +1501,9 @@ public class ConnectDB {
          int year= cal.get(Calendar.YEAR);
         
             try{
+            	try {
+                	 Class.forName(S_JDBC_DRIVER);
+               }catch(Exception e) {}
                     Connection conection = DriverManager.getConnection(url, username, password);
                     Statement pet = conection.createStatement(); 
                     String query = "SELECT DISTINCT c.tema\n" +
@@ -1383,6 +1531,9 @@ public class ConnectDB {
         Calendar cal= Calendar.getInstance();
         int year= cal.get(Calendar.YEAR);
         try{
+        	try {
+            	 Class.forName(S_JDBC_DRIVER);
+           }catch(Exception e) {}
             Connection conection = DriverManager.getConnection(url, username, password);
             Statement pet = conection.createStatement(); 
             String query = "SELECT *\n" +
@@ -1406,6 +1557,38 @@ public class ConnectDB {
     
     
     /*
+    Ganador por tema de este año
+*/
+public Cartel ganadortema_anyoactual (String tema){
+    Cartel cart=null;
+    ResultSet rs=null;
+    Calendar cal= Calendar.getInstance();
+    int year= cal.get(Calendar.YEAR);
+    try{
+    	try {
+        	 Class.forName(S_JDBC_DRIVER);
+       }catch(Exception e) {}
+        Connection conection = DriverManager.getConnection(url, username, password);
+        Statement pet = conection.createStatement(); 
+        String query = "SELECT *\n" +
+                                "FROM cartel c\n" +
+                                "WHERE c.ganador='T' AND c.tema='"+tema+"' AND c.agno="+year+";";
+        rs=pet.executeQuery (query);
+        while (rs.next()){
+            int idCartel = rs.getInt("id");
+            String emailAlum = rs.getString("emailA");
+            String link = rs.getString("link");
+            cart=new Cartel(idCartel,emailAlum,"T",year,tema,link);
+        }
+        return cart;
+    } catch(SQLException ex){
+        System.out.println(ex.getMessage());
+        return cart;
+    }     
+}
+    
+    
+    /*
         Comprueba si el id ya existe
     */
     public boolean comprobar_id(String tabla, int newID){
@@ -1414,6 +1597,9 @@ public class ConnectDB {
          boolean aver=false;
     
         try{ 
+        	try {
+            	 Class.forName(S_JDBC_DRIVER);
+           }catch(Exception e) {}
                 Connection conection = DriverManager.getConnection(url, username, password);
                 Statement pet = conection.createStatement(); 
                 String query="select "+tabla+".id FROM "+tabla+" WHERE "+tabla+".id="+newID+";";
@@ -1436,6 +1622,170 @@ public class ConnectDB {
         }
        
     }
+    
+	    /*
+	    Cartel segun id del cartel
+	*/
+	public Cartel cartel_id (int idCartel){
+	    Cartel cart=null;
+	    ResultSet rs=null;
+	    try{
+	    	try {
+	        	 Class.forName(S_JDBC_DRIVER);
+	       }catch(Exception e) {}
+	        Connection conection = DriverManager.getConnection(url, username, password);
+	        Statement pet = conection.createStatement(); 
+	        String query = "SELECT *\n" +
+	                                "FROM cartel c\n" +
+	                                "WHERE c.id='"+idCartel+"';";
+	        rs=pet.executeQuery (query);
+	        while (rs.next()){
+	        	String ganador = rs.getString("ganador");
+	            String emailAlum = rs.getString("emailA");
+	            String link = rs.getString("link");
+	            String tema = rs.getString("tema");
+	            int year = rs.getInt("agno");
+	            cart=new Cartel(idCartel,emailAlum,ganador,year,tema,link);
+	        }
+	        return cart;
+	    } catch(SQLException ex){
+	        System.out.println(ex.getMessage());
+	        return cart;
+	    }     
+	}
+	
+	    /*
+	    Alumno segun el email
+	*/
+	public Alumno alumno_id (String email){
+	    Alumno alum=null;
+	    ResultSet rs=null;
+	    try{
+	    	try {
+	        	 Class.forName(S_JDBC_DRIVER);
+	       }catch(Exception e) {}
+	        Connection conection = DriverManager.getConnection(url, username, password);
+	        Statement pet = conection.createStatement(); 
+	        String query = "SELECT *\n" +
+	                                "FROM alumno a\n" +
+	                                "WHERE a.email='"+email+"';";
+	        rs=pet.executeQuery (query);
+	        while (rs.next()){
+	        	String nombre = rs.getString("nombre");
+	            String apellido1 = rs.getString("apellido1");
+	            String apellido2 = rs.getString("apellido2");
+	            String emailprofe = rs.getString("emailprofe");
+	            alum=new Alumno(nombre,apellido1,apellido2,email,emailprofe);
+	        }
+	        return alum;
+	    } catch(SQLException ex){
+	        System.out.println(ex.getMessage());
+	        return alum;
+	    }     
+	}
+	
+	
+	    /*
+	    Profesor segun el email
+	*/
+	public Profesor profe_id (String email){
+	    Profesor profe=null;
+	    ResultSet rs=null;
+	    try{
+	    	try {
+	        	 Class.forName(S_JDBC_DRIVER);
+	       }catch(Exception e) {}
+	        Connection conection = DriverManager.getConnection(url, username, password);
+	        Statement pet = conection.createStatement(); 
+	        String query = "SELECT *\n" +
+	                                "FROM profesor p\n" +
+	                                "WHERE p.email='"+email+"';";
+	        rs=pet.executeQuery (query);
+	        while (rs.next()){
+	        	String nombre = rs.getString("nombre");
+	            String apellido1 = rs.getString("apellido1");
+	            String apellido2 = rs.getString("apellido2");
+	            String emailprofe = rs.getString("emailprofe");
+	            profe=new Profesor(nombre,apellido1,apellido2,email,emailprofe);
+	        }
+	        return profe;
+	    } catch(SQLException ex){
+	        System.out.println(ex.getMessage());
+	        return profe;
+	    }     
+	}
+	
+	
+	
+	 /*
+     * FUNCION NUEVA
+     */
+    public boolean comprobar_prof (String email_profe) throws Exception {
+       ResultSet rs=null;
+           try{
+               try{
+                  
+                   try {
+                     Class.forName(S_JDBC_DRIVER);
+                  }catch(Exception e) {}
+                   Connection conection = DriverManager.getConnection(url, username, password);
+                   Statement pet = conection.createStatement(); 
+                   String query = "SELECT *\n" +
+                                   "FROM profesor a\n" +
+                                   "WHERE a.profesor='"+ email_profe+"';";
+                   rs=pet.executeQuery (query);
+                   if(rs.next()){
+                      return true;
+                   }
+                   else {
+                    System.out.println("Ha habido un eror en el nombre");
+                        throw new Exception ("Error nombre profesor");
+                        //throw new Exception ("Error contrasena");
+                   }
+               } catch(NoSuchAlgorithmException e){
+                   System.out.println("No se ha podido cifrar la contraseña");
+                   return false;
+               }
+           } catch(SQLException ex){
+                System.out.println(ex.getMessage());
+                return false;
+           }  
+    }
+   /*
+    * FUNCION NUEVA
+    */
+   public boolean comprobar_alum (String email_alum) throws Exception {
+       ResultSet rs=null;
+          try{
+              try{
+                 
+                  try {
+                     Class.forName(S_JDBC_DRIVER);
+                 }catch(Exception e) {}
+                  Connection conection = DriverManager.getConnection(url, username, password);
+                  Statement pet = conection.createStatement(); 
+                  String query = "SELECT *\n" +
+                                  "FROM alumno a\n" +
+                                  "WHERE a.profesor='"+ email_alum+"';";
+                  rs=pet.executeQuery (query);
+                  if(rs.next()){
+                     return true;
+                  }
+                  else {
+                    System.out.println("Ha habido un error en el nombre del alumno");
+                        throw new Exception ("Error nombre alumno");
+                        //throw new Exception ("Error contrasena");
+                  }
+              } catch(NoSuchAlgorithmException e){
+                  System.out.println("No se ha podido cifrar la contraseña");
+                  return false;
+              }
+          } catch(SQLException ex){
+               System.out.println(ex.getMessage());
+               return false;
+          } 
+ }
+    
 }
 
 

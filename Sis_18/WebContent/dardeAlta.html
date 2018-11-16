@@ -42,21 +42,20 @@
 			<h2>DARSE DE ALTA</h2>
 		</div>
 		<div class = "panel-body">
-		<form name="f2" method="post" action="InsertaUser.do">
-			<h4>* Email: </h4>
-			<input id="choose" name="usuario" type="email" required placeholder= "Email">
+		<form name="f2" method="post" action="javascript:comprobarClave(this.form)">
+			<h4>* Usuario: </h4>
+			<input id="choose" name="i_like" type="email" required placeholder= "email">
 			<h4>* Contraseña: </h4>
-			<input id="choose" type="password" name = "pass" pattern="[a-zA-Z0-9]+" name="clave1" required placeholder= "Contraseña"><br>
+			<input id="choose"  pattern="[a-zA-Z0-9]+" name="clave2" required placeholder= "contraseña"><br>
 			<h4>* Repite la contraseña: </h4>
-			<input type="password" pattern="[a-zA-Z0-9]+" name="clave1" required placeholder="Repite la contraseña">
-			<h4>Introduzca su nombre real: </h4>
-			<input type="nombre" name="nombre" required placeholder="Nombre">
-			<h4>Introduzca sus apellidos: </h4>
-			<input type="nombre" name="apellido1" required placeholder="Apellido 1">
-			<input type="nombre" name="apellido2" placeholder="Apellido 2 (opcional)">
-			<h4>Introduzca el correo del profesor asociado </h4>
-			<input type="nombre" name="emailP" placeholder="email profesor">
-			<div class="m_options js_quizz_question" id="formulario">		
+			<input type="contraseña" pattern="[a-zA-Z0-9]+" name="clave3" required placeholder="repite la contraseña">
+			<h4>Introduzca su nombre real </h4>
+			<input type="nombre" name="usuario" placeholder="nombre">
+			<h4>Introduzca sus apellidos </h4>
+			<input type="nombre" name="usuario" placeholder="apellidos">
+			<div class="m_options js_quizz_question" id="formulario">
+			
+          			
             					<div class="m_option js_ok_ko_class_placement">
              						 *<input class="m_option_input js_quizz_radio" data-msg-required="Elige una opcion" required="required" type="radio" value="36428" name="participacion" id="holaquetal" aria-required="true">
               						<label class="m_option_label" for="holaquetal">Soy alumno</label>
@@ -70,14 +69,12 @@
           			
 				
 			</div>
-			
-		
+			</form>
+		</div>
 		<div class = "panel-footer">
-			<button class= "btn btn-primary" action="InsertaUser.do" ">Registrarse</button>
+			<button class= "btn btn-primary" onclick="location.href='Profesor.html'"">Registrarse</button>
 			<button class= "btn btn-warning" onclick="location.href='menuPrincipal.html'">Cancelar</button><br><br>
 			<h4>Una vez registrado, podrá usar la cuenta una vez el docente encargado la apruebe </h4>
-		</div>
-		</form>
 		</div>
 		</div>
 	</div>
