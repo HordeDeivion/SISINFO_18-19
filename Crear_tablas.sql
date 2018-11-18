@@ -9,7 +9,7 @@ CREATE TABLE profesor(
 	apellido1   VARCHAR(40) NOT NULL,
 	apellido2   VARCHAR(40),
 	email       VARCHAR(70),
-	contrasena  VARCHAR(40),
+	contrasena  VARCHAR(400),
 	emailprofe  VARCHAR(70),
 	CONSTRAINT profesorpk PRIMARY KEY(email),
 	CONSTRAINT emailProfFK 	FOREIGN KEY (emailprofe) REFERENCES profesor(email)
@@ -20,7 +20,7 @@ CREATE TABLE alumno(
 	apellido1   VARCHAR(40) NOT NULL,
 	apellido2   VARCHAR(40),
 	email       VARCHAR(70),
-	contrasena  VARCHAR(40),
+	contrasena  VARCHAR(400),
 	emailprofe  VARCHAR(70),
 	CONSTRAINT alumnopk PRIMARY KEY(email),
 	CONSTRAINT emailProfeFK FOREIGN KEY (emailprofe) REFERENCES profesor(email) ON DELETE CASCADE
@@ -58,6 +58,19 @@ CREATE TABLE pregunta(
 
 
 
+CREATE TABLE reto(
+	id          INT(5),
+	descripcion      VARCHAR(600) NOT NULL,
+	idCartel    INT(20),
+	CONSTRAINT retoapk 	PRIMARY KEY(id,idCartel),
+	CONSTRAINT cartelfkreto FOREIGN KEY (idCartel) REFERENCES cartel(id) ON DELETE CASCADE
+);
+CREATE TABLE noticia(
+	titulo      VARCHAR(10000) NOT NULL,
+	idCartel    INT(20),
+	CONSTRAINT noticia_pk 	PRIMARY KEY(idCartel),
+	CONSTRAINT notiicia_fk FOREIGN KEY (idCartel) REFERENCES cartel(id) ON DELETE CASCADE
+);
 CREATE TABLE reto(
 	id          INT(5),
 	descripcion      VARCHAR(600) NOT NULL,
