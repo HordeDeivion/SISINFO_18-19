@@ -7,6 +7,7 @@ drop table reto;
 drop table respuesta;
 drop table pregunta;
 drop table comentario;
+drop table noticia;
 drop table cartel;
 drop table alumno;
 drop table profesor;
