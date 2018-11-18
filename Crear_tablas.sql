@@ -33,6 +33,7 @@ CREATE TABLE cartel (
 	ganador     CHAR(1),
 	agno        INT(4) NOT NULL,
 	tema        VARCHAR(20) NOT NULL,
+	titulo      VARCHAR(50) NOT NULL,
 	link        VARCHAR(200) NOT NULL,
 	CONSTRAINT cartelpk PRIMARY KEY (id),
 	CONSTRAINT emailFK FOREIGN KEY (emailA) REFERENCES alumno(email) ON DELETE CASCADE
